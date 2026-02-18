@@ -1,0 +1,691 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Para mi Princesa | Nuestro Blog</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;600;700&family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'soft-pink': '#FFF0F5',
+                        'deep-rose': '#BE185D',
+                        'pale-rose': '#FBCFE8',
+                        'text-gray': '#4B5563',
+                        'paper': '#FFFBEB',
+                    },
+                    fontFamily: {
+                        'hand': ['"Dancing Script"', 'cursive'],
+                        'serif': ['"Playfair Display"', 'serif'],
+                        'body': ['"Lato"', 'sans-serif'],
+                    },
+                    animation: {
+                        'float': 'float 6s ease-in-out infinite',
+                        'slide-up': 'slideUp 0.8s ease-out forwards',
+                        'fade-in': 'fadeIn 1s ease-out forwards',
+                        'heart-beat': 'heartBeat 1.5s infinite',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-15px)' },
+                        },
+                        slideUp: {
+                            '0%': { transform: 'translateY(30px)', opacity: '0' },
+                            '100%': { transform: 'translateY(0)', opacity: '1' },
+                        },
+                        fadeIn: {
+                            '0%': { opacity: '0' },
+                            '100%': { opacity: '1' },
+                        },
+                        heartBeat: {
+                            '0%': { transform: 'scale(1)' },
+                            '50%': { transform: 'scale(1.1)' },
+                            '100%': { transform: 'scale(1)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            background-color: #FFF0F5;
+            background-image: 
+                radial-gradient(#FBCFE8 1.5px, transparent 1.5px),
+                radial-gradient(#FBCFE8 1.5px, #FFF0F5 1.5px);
+            background-size: 40px 40px;
+            background-position: 0 0, 20px 20px;
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+        }
+
+        /* Navigation Animations */
+        .nav-link {
+            position: relative;
+            transition: color 0.3s ease;
+        }
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -4px;
+            left: 0;
+            background-color: #BE185D;
+            transition: width 0.3s ease;
+        }
+        .nav-link:hover::after {
+            width: 100%;
+        }
+        .nav-link:hover {
+            color: #BE185D;
+        }
+
+        /* Card Styles */
+        .letter-card {
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        .letter-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 25px -5px rgba(190, 24, 93, 0.15);
+        }
+        .letter-card.read {
+            opacity: 0.7;
+            filter: grayscale(0.3);
+        }
+        .letter-card.read .read-badge {
+            display: block;
+        }
+
+        /* Paper Texture */
+        .paper-texture {
+            background-color: #FFFBEB;
+            background-image: url("image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 86c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm28-65c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm23-11c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-6 60c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm29 22c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zM32 63c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm57-13c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-9-21c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM60 91c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM35 41c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM12 60c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2z' fill='%23fbcfe8' fill-opacity='0.4' fill-rule='evenodd'/%3E%3C/svg%3E");
+        }
+
+        /* Floating Hearts Background */
+        .bg-heart {
+            position: fixed;
+            color: rgba(244, 114, 182, 0.2);
+            z-index: 0;
+            animation: float 10s infinite ease-in-out;
+            pointer-events: none;
+        }
+
+        /* Page Transition */
+        .page-section {
+            display: none;
+            animation: fadeIn 0.5s ease-out;
+        }
+        .page-section.active {
+            display: block;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #fce7f3; 
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #f472b6; 
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #db2777; 
+        }
+    </style>
+</head>
+<body class="font-body text-gray-700 antialiased selection:bg-pink-200 selection:text-pink-900">
+
+    <!-- Background Hearts -->
+    <i class="fas fa-heart bg-heart text-6xl top-20 left-10" style="animation-delay: 0s;"></i>
+    <i class="fas fa-heart bg-heart text-4xl top-1/2 right-20" style="animation-delay: 2s;"></i>
+    <i class="fas fa-heart bg-heart text-8xl bottom-20 left-1/4" style="animation-delay: 4s;"></i>
+    <i class="fas fa-heart bg-heart text-5xl top-1/4 left-1/3" style="animation-delay: 1s;"></i>
+
+    <!-- Navigation -->
+    <nav class="fixed w-full z-40 transition-all duration-300 bg-white/80 backdrop-blur-md border-b border-pink-100" id="navbar">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-20">
+                <div class="flex-shrink-0 flex items-center gap-3 cursor-pointer" onclick="navigateTo('home')">
+                    <div class="w-10 h-10 bg-gradient-to-br from-pink-400 to-rose-500 rounded-full flex items-center justify-center text-white shadow-lg animate-heart-beat">
+                        <i class="fas fa-heart text-sm"></i>
+                    </div>
+                    <span class="font-hand text-3xl font-bold text-rose-600 tracking-wide">Para mi Princesa</span>
+                </div>
+
+                <div class="hidden md:flex space-x-8 items-center">
+                    <a href="#" onclick="navigateTo('home')" class="nav-link text-gray-600 font-medium text-lg">Inicio</a>
+                    <a href="#cartas" onclick="navigateTo('home')" class="nav-link text-gray-600 font-medium text-lg">Cartas</a>
+                    <a href="cuponera.html" class="nav-link text-gray-600 font-medium text-lg">Cupones</a>
+                    <a href="razones-para-amarte.html" class="nav-link text-gray-600 font-medium text-lg">Razones</a>
+                </div>
+
+                <div class="md:hidden flex items-center">
+                    <button id="mobile-menu-btn" class="text-rose-600 hover:text-rose-800 focus:outline-none">
+                        <i class="fas fa-bars text-2xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div id="mobile-menu" class="hidden md:hidden bg-white border-t border-pink-100 absolute w-full">
+            <div class="px-4 pt-2 pb-6 space-y-2 shadow-lg">
+                <a href="#" onclick="navigateTo('home')" class="block px-3 py-3 rounded-md text-base font-medium text-gray-700 hover:text-rose-600 hover:bg-pink-50">Inicio</a>
+                <a href="#cartas" onclick="navigateTo('home')" class="block px-3 py-3 rounded-md text-base font-medium text-gray-700 hover:text-rose-600 hover:bg-pink-50">Cartas</a>
+                <a href="cuponera.html" class="block px-3 py-3 rounded-md text-base font-medium text-gray-700 hover:text-rose-600 hover:bg-pink-50">Cupones</a>
+                <a href="razones-para-amarte.html" class="block px-3 py-3 rounded-md text-base font-medium text-gray-700 hover:text-rose-600 hover:bg-pink-50">Razones</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- MAIN CONTENT AREA -->
+    <main id="main-content">
+        
+        <!-- HOME PAGE VIEW -->
+        <div id="view-home" class="page-section active">
+            <!-- Hero Section -->
+            <header class="relative pt-32 pb-20 lg:pt-48 lg:pb-32 overflow-hidden">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
+                    <span class="inline-block py-1 px-4 rounded-full bg-rose-100 text-rose-600 text-sm font-bold tracking-wider mb-6 animate-slide-up">
+                        BLOG DE AMOR
+                    </span>
+                    <h1 class="font-hand text-6xl md:text-8xl text-rose-600 mb-6 leading-tight animate-slide-up" style="animation-delay: 0.1s;">
+                        Historias para Ti
+                    </h1>
+                    <p class="mt-4 max-w-2xl mx-auto text-xl text-gray-600 leading-relaxed animate-slide-up" style="animation-delay: 0.2s;">
+                        Cada palabra aquí escrita es un pedacito de mi corazón. Bienvenida a nuestro rincón especial.
+                    </p>
+                    
+                    <!-- Time Counter Widget -->
+                    <div class="mt-12 inline-flex flex-col md:flex-row items-center gap-4 md:gap-8 bg-white/80 backdrop-blur-sm px-8 py-4 rounded-2xl shadow-xl border border-pink-200 animate-slide-up" style="animation-delay: 0.3s;">
+                        <div class="flex items-center gap-3">
+                            <div class="w-12 h-12 bg-rose-500 rounded-full flex items-center justify-center text-white shadow-lg">
+                                <i class="fas fa-hourglass-half text-xl"></i>
+                            </div>
+                            <div class="text-left">
+                                <p class="text-xs text-gray-500 font-bold uppercase tracking-wider">Tiempo Juntos</p>
+                                <p class="font-mono text-rose-600 font-bold text-lg" id="time-counter">Cargando...</p>
+                            </div>
+                        </div>
+                        <div class="hidden md:block w-px h-12 bg-pink-200"></div>
+                        <div class="flex items-center gap-3">
+                            <div class="w-12 h-12 bg-purple-500 rounded-full flex items-center justify-center text-white shadow-lg">
+                                <i class="fas fa-calendar-heart text-xl"></i>
+                            </div>
+                            <div class="text-left">
+                                <p class="text-xs text-gray-500 font-bold uppercase tracking-wider">Desde</p>
+                                <p class="font-mono text-purple-600 font-bold text-lg">24 Junio 2025</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Scroll Indicator -->
+                    <div class="mt-16 animate-bounce">
+                        <a href="#cartas" class="text-rose-400 hover:text-rose-600 transition">
+                            <i class="fas fa-chevron-down text-3xl"></i>
+                        </a>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Blog Grid Section -->
+            <section id="cartas" class="py-16 bg-white/40 min-h-screen">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <div class="text-center mb-16">
+                        <h2 class="font-serif text-4xl text-gray-800 font-bold mb-4">Tus Cartas</h2>
+                        <div class="w-20 h-1 bg-rose-400 mx-auto rounded-full"></div>
+                        <p class="mt-4 text-gray-500">Haz click para leer en su propio espacio</p>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-10" id="cards-container">
+                        <!-- Cards will be injected by JS -->
+                    </div>
+                </div>
+            </section>
+
+            <!-- Nosotros Section -->
+            <section id="nosotros" class="py-20 bg-gradient-to-b from-white/40 to-pink-100/50">
+                <div class="max-w-4xl mx-auto px-4 text-center">
+                    <h2 class="font-serif text-4xl text-gray-800 font-bold mb-8">Nuestra Historia</h2>
+                    <div class="bg-white/80 backdrop-blur-sm rounded-2xl p-8 shadow-xl border border-pink-100">
+                        <div class="flex justify-center mb-6">
+                            <div class="relative">
+                                <img src="https://i.pinimg.com/736x/95/d4/e2/95d4e2e0b4dbf011db29ad2900905cd7.jpg" alt="Nosotros" class="w-32 h-32 rounded-full object-cover border-4 border-rose-400 shadow-lg">
+                                <div class="absolute -bottom-2 -right-2 w-10 h-10 bg-rose-500 rounded-full flex items-center justify-center text-white">
+                                    <i class="fas fa-heart text-sm"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <p class="text-lg text-gray-600 leading-relaxed mb-6">
+                            Desde el día en que nuestras vidas se cruzaron, algo en mí cambió para siempre. No fue solo un momento, fue el inicio de algo, algo que con el tiempo se convirtió en nuestro refugio, en nuestra paz, en nuestra historia. Hemos vivido risas, momentos simples que se volvieron eternos, pruebas que nos hicieron más fuertes y días que confirmaron que somos tú y yo contra todo.
+
+No ha sido un camino perfecto, pero ha sido nuestro propio camino. Hemos aprendido, crecido y seguido adelante tomados de la mano, eligiéndonos incluso cuando el mundo se ponía difícil. Porque lo nuestro no es solo amor, es confianza, es compromiso, es la decisión diaria de quedarnos, de cuidarnos y de construir juntos.
+
+Hoy no solo miro lo que hemos vivido… miro todo lo que nos falta por vivir, nuestro camino apenas comienza, y si algo tengo claro, es que mi historia favorita siempre será la que estoy escribiendo contigo ❤️
+                        </p>
+                        <!-- <div class="flex justify-center gap-4 flex-wrap">
+                            <span class="px-4 py-2 bg-rose-100 text-rose-600 rounded-full text-sm font-semibold">❤️ Amor</span>
+                            <span class="px-4 py-2 bg-purple-100 text-purple-600 rounded-full text-sm font-semibold">✨ Confianza</span>
+                            <span class="px-4 py-2 bg-pink-100 text-pink-600 rounded-full text-sm font-semibold">🌟 Compromiso</span>
+                            <span class="px-4 py-2 bg-blue-100 text-blue-600 rounded-full text-sm font-semibold">💫 Felicidad</span>
+                        </div> -->
+                    </div>
+                </div>
+            </section>
+
+            <!-- Footer -->
+            <footer class="bg-white border-t border-pink-100 py-12">
+                <div class="max-w-7xl mx-auto px-4 text-center">
+                    <i class="fas fa-heart text-rose-500 text-3xl mb-4 animate-heart-beat"></i>
+                    <p class="font-hand text-2xl text-gray-600">Hecho con todo el amor del mundo para la otra, digooo para tii 😘</p>
+                    <p class="text-gray-400 text-sm mt-2">De Eduardo, para mi Princesa ❤️</p>
+                </div>
+            </footer>
+        </div>
+
+        <!-- LETTER READING VIEW (Dynamic) -->
+        <div id="view-letter" class="page-section min-h-screen pt-24 pb-12">
+            <div class="max-w-4xl mx-auto px-4">
+                <!-- Back Button -->
+                <button onclick="navigateTo('home')" class="mb-6 flex items-center text-rose-600 hover:text-rose-800 font-bold transition group">
+                    <i class="fas fa-arrow-left mr-2 transform group-hover:-translate-x-1 transition"></i> Volver al Inicio
+                </button>
+
+                <!-- Letter Content Container -->
+                <div class="paper-texture rounded-lg shadow-2xl overflow-hidden min-h-[80vh] flex flex-col relative animate-fade-in">
+                    <!-- Letter Header -->
+                    <div class="bg-rose-50/50 p-8 border-b border-rose-100 text-center relative">
+                        <div class="absolute top-4 right-4 text-rose-200">
+                            <i class="fas fa-stamp text-4xl"></i>
+                        </div>
+                        <h1 id="letter-title" class="font-hand text-5xl md:text-6xl text-rose-600 mb-2">Título de la Carta</h1>
+                        <p id="letter-date" class="text-gray-500 italic font-serif">Fecha</p>
+                    </div>
+
+                    <!-- Letter Body -->
+                    <div class="p-8 md:p-16 flex-grow overflow-y-auto">
+                        <div id="letter-body" class="font-serif text-lg md:text-xl leading-relaxed text-gray-800 space-y-6 max-w-2xl mx-auto">
+                            <!-- Content injected by JS -->
+                        </div>
+                        
+                        <!-- Signature -->
+                        <div class="mt-12 text-right max-w-2xl mx-auto">
+                            <div class="font-hand text-4xl text-rose-600 mb-2">Con todo mi amor,</div>
+                            <div class="font-hand text-3xl text-gray-700">Eduardo ❤️</div>
+                        </div>
+                    </div>
+
+                    <!-- Letter Footer Actions -->
+                    <div class="bg-white p-4 border-t border-rose-100 flex justify-between items-center text-sm text-gray-500">
+                        <span id="read-status" class="flex items-center gap-2">
+                            <i class="fas fa-check-circle text-green-500"></i> Leído
+                        </span>
+                        <button onclick="navigateTo('home')" class="text-rose-600 hover:underline">Cerrar carta</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <script>
+        // --- DATA ---
+        const letters = [
+{
+    id: 1,
+    title: "El amor que vive en mí",
+    date: "Mi sentimiento constante",
+    image: "https://images.unsplash.com/photo-1518199266791-5375a83190b7?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+    tag: "Amor",
+    tagColor: "bg-red-400",
+    preview: "Amarte no es algo que hago por momentos, amarte es algo que vive dentro de mí todo el tiempo, incluso cuando no digo nada...",
+    content: `
+        <p>Mi princesa,</p>
+
+        <p>Amarte no es algo que hago a ratos, amarte es algo que vive dentro de mí todo el tiempo. No empieza cuando te escribo ni termina cuando me callo, porque incluso en silencio mi corazón sigue diciendo tu nombre. Tú no eres solo la persona que amo, eres la razón por la que mi vida tiene sentido, eres mi paz, mi lugar seguro, mi hogar incluso cuando no estamos en el mismo lugar.</p>
+
+        <p>A veces me detengo a pensar en todo lo que provocas en mí… y entiendo que no existe una sola parte de mi vida donde no estés tú. Estás en mis pensamientos, en mis sueños, en mis planes, en mis ganas de seguir adelante, en cada paso que doy. Porque desde que llegaste algo cambió, algo se acomodó dentro de mí, algo entendió que eras tú… solo tú.</p>
+
+        <p>Te amo cuando sonríes, cuando me hablas, cuando me abrazas, cuando me miras sin decir nada. Te amo en tu forma más simple y en tu forma más profunda. Amo tu esencia, tu manera de ser, tu forma de quedarte, tu forma de amarme. Porque contigo aprendí que amar no es solo sentir bonito… amar es elegir, cuidar, quedarse, construir y crecer juntos.</p>
+
+        <p>Yo te elijo todos los días. Sin dudas, sin miedo, sin mirar a otro lado. Porque lo que siento por ti no es pasajero, no es momentáneo, no es superficial… es real, es profundo, es constante. Es un amor que vive en mí, que respira contigo, que sueña contigo, que quiere una vida contigo.</p>
+
+        <p>Y si la vida me preguntara mil veces a quién quiero amar… mil veces volvería a elegirte a ti.</p>
+    `
+},
+{
+    id: 2,
+    title: "Nuestro futuro existe",
+    date: "Donde todo es tú y yo",
+    image: "https://images.unsplash.com/photo-1529634806980-85c3dd6d34ac?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+    tag: "Futuro",
+    tagColor: "bg-blue-400",
+    preview: "Cuando pienso en mi vida, siempre apareces tú. No como un momento, sino como todo lo que quiero construir...",
+    content: `
+        <p>Mi amor,</p>
+
+        <p>Si cierro los ojos y pienso en mi vida, siempre apareces tú. No como un recuerdo, no como un instante, sino como todo. Porque cuando imagino mi futuro no lo veo solo, lo veo contigo, caminando a mi lado, tomados de la mano, construyendo una vida que es nuestra.</p>
+
+        <p>Sueño con despertar contigo cada mañana, con dormir contigo cada noche, con compartir días simples que se vuelven especiales solo porque estamos juntos. Sueño con nuestras conversaciones largas, con nuestras risas sin razón, con nuestros abrazos donde el mundo desaparece.</p>
+
+        <p>Y sí… sueño con el día en que te vea vestida de blanco. El día en que camines hacia mí y todo se detenga. El día en que tome tu mano y te prometa amarte, cuidarte, respetarte y quedarme contigo toda la vida. No quiero un momento contigo… quiero toda una vida.</p>
+
+        <p>Quiero crecer contigo, avanzar contigo, superar todo contigo, celebrar cada logro contigo. Quiero ser tu paz, tu apoyo, tu compañero, tu amor seguro. Quiero que el tiempo pase… y que sigamos siendo tú y yo, más fuertes, más unidos, más nuestros.</p>
+
+        <p>Porque mi futuro aún no está escrito… pero si hay algo seguro, es que te quiero en cada parte de él.</p>
+    `
+},
+{
+    id: 3,
+    title: "El sueño de nuestra vida",
+    date: "Nuestra historia eterna",
+    image: "https://images.unsplash.com/photo-1504196606672-aef5c9cefc92?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+    tag: "Sueños",
+    tagColor: "bg-pink-400",
+    preview: "A veces imagino nuestra vida como si ya estuviera pasando, como si el tiempo avanzara pero nosotros siguiéramos juntos...",
+    content: `
+        <p>Mi princesa hermosa,</p>
+
+        <p>A veces cierro los ojos e imagino nuestra vida como si ya estuviera ocurriendo. Me imagino caminando contigo, tomándote de la mano, sintiendo tu presencia, sabiendo que pase lo que pase seguimos juntos, firmes, unidos, eligiéndonos.</p>
+
+        <p>Me imagino nuestro hogar… lleno de paz, lleno de amor, lleno de nosotros. Nuestras risas en la madrugada, nuestras conversaciones sin prisa, nuestros silencios cómodos donde no hace falta hablar porque con mirarnos basta. Me imagino una vida donde lo simple se vuelve eterno porque lo vivimos juntos.</p>
+
+        <p>Y en ese sueño también veo nuestra familia. Te veo como mamá, cuidando, amando, protegiendo con ese corazón tan bonito que tienes. Me veo a tu lado, creciendo juntos, viendo a nuestras hijas reír, aprender, vivir… mientras tú y yo seguimos siendo el mismo amor, pero más fuerte, más profundo, más eterno.</p>
+
+        <p>No sueño con una vida perfecta… sueño con una vida real, contigo. Con problemas que superamos juntos, con días felices que celebramos abrazados, con momentos simples que se convierten en recuerdos eternos.</p>
+
+        <p>Porque tú no eres solo mi sueño… eres la vida que quiero vivir.</p>
+    `
+},
+{
+    id: 4,
+    title: "La noche antes de nuestra boda",
+    date: "El inicio de nuestro para siempre",
+    image: "https://images.unsplash.com/photo-1520854221256-17451cc331bf?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+    tag: "Boda",
+    tagColor: "bg-purple-400",
+    preview: "Esta noche no puedo dormir, porque mañana no será un día cualquiera… mañana será el día en que nuestras vidas se vuelvan una sola...",
+    content: `
+        <p>Mi amor,</p>
+
+        <p>Esta noche no puedo dormir. No porque algo esté mal, sino porque mi corazón late más fuerte que nunca. Mañana no será un día cualquiera… mañana será el día en que nuestras vidas se vuelvan una sola, el día en que te vea caminar hacia mí y entienda que todo en mi vida me llevó hasta ti.</p>
+
+        <p>Pienso en todo lo que hemos vivido, en cada momento, en cada abrazo, en cada “te amo” sincero. Y me doy cuenta de que nada fue casualidad, nada fue coincidencia… todo fue camino hacia este momento. Porque desde el primer día algo dentro de mí supo que eras tú.</p>
+
+        <p>Mañana, cuando tome tu mano, no solo te estaré mirando… estaré recordando cada paso que nos trajo hasta aquí. Estaré prometiéndote en silencio que voy a cuidarte, respetarte, amarte y quedarme contigo toda mi vida. No como una promesa bonita… sino como una decisión eterna.</p>
+
+        <p>Quiero una vida contigo. Quiero despertar contigo, dormir contigo, crecer contigo, enfrentar todo contigo. Quiero que cuando pase el tiempo y miremos atrás, veamos una historia llena de amor, de fuerza, de nosotros.</p>
+
+        <p>Y esta noche, antes de que llegue ese día… solo quiero decirte algo simple pero eterno, mañana empieza nuestro para siempre.</p>
+    `
+},
+{
+    id: 5,
+    title: "Promesas que nacen del corazón",
+    date: "Lo que siempre voy a cumplir",
+    image: "https://images.unsplash.com/photo-1519741497674-611481863552?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+    tag: "Promesas",
+    tagColor: "bg-yellow-400",
+    preview: "No te prometo una vida perfecta, te prometo algo más real… quedarme contigo pase lo que pase...",
+    content: `
+        <p>Mi princesa,</p>
+
+        <p>No te prometo una vida perfecta, porque la vida real no es perfecta. Pero te prometo algo más fuerte, más real, más eterno… te prometo quedarme contigo pase lo que pase.</p>
+
+        <p>Te prometo cuidarte cuando estés cansada, abrazarte cuando lo necesites, escucharte cuando quieras hablar, quedarme cuando el mundo se ponga difícil. Te prometo no soltarte, no rendirme, no dejar de elegirte nunca.</p>
+
+        <p>Te prometo amarte en tus días buenos y en tus días difíciles. Amarte cuando sonrías y cuando llores. Amarte cuando todo esté bien y cuando tengamos que luchar. Porque mi amor por ti no depende del momento… depende de quién eres tú para mí.</p>
+
+        <p>Quiero construir contigo una vida real. Con problemas que superamos juntos, con sueños que cumplimos tomados de la mano, con momentos simples que se vuelven eternos porque los vivimos uno al lado del otro.</p>
+
+        <p>Mi promesa no es solo decir “te amo”… mi promesa es demostrártelo toda la vida.</p>
+    `
+},
+{
+    id: 6,
+    title: "Nuestro primer hogar",
+    date: "Donde empieza nuestra vida",
+    image: "https://images.unsplash.com/photo-1505691938895-1758d7feb511?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+    tag: "Hogar",
+    tagColor: "bg-orange-400",
+    preview: "No será solo una casa… será el lugar donde construiremos nuestra historia, nuestros recuerdos y nuestra vida juntos...",
+    content: `
+        <p>Mi amor,</p>
+
+        <p>A veces imagino nuestro primer hogar… y no veo paredes ni muebles, veo risas, abrazos, conversaciones largas, momentos simples llenos de amor. Porque nuestro hogar no será un lugar… será nosotros.</p>
+
+        <p>Me imagino despertando contigo, escuchando tu voz, viendo tu sonrisa cada mañana. Me imagino nuestras noches hablando sin prisa, riendo por cualquier cosa, sintiendo paz solo por estar juntos.</p>
+
+        <p>Ese hogar será donde creceremos, donde construiremos recuerdos, donde convertiremos lo simple en eterno. Será el lugar donde aprendamos más el uno del otro, donde nos apoyemos, donde sigamos eligiéndonos cada día.</p>
+
+        <p>Y cuando el tiempo pase… ese hogar no será solo una casa, será nuestra historia viva. Cada rincón tendrá un recuerdo, cada espacio tendrá amor, cada momento tendrá tu nombre.</p>
+
+        <p>Porque mi hogar no es un lugar… mi hogar eres tú.</p>
+    `
+},
+{
+    id: 7,
+    title: "Si algún día lees esto",
+    date: "Para cualquier momento",
+    image: "https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+    tag: "Eterno",
+    tagColor: "bg-indigo-400",
+    preview: "Si algún día dudas, si algún día te sientes sola, si algún día necesitas recordar cuánto te amo… lee esto...",
+    content: `
+        <p>Mi princesa,</p>
+
+        <p>Si algún día lees esto, quiero que sea porque necesitas recordar algo importante… cuánto te amo.</p>
+
+        <p>Si algún día dudas, si algún día te sientes sola, si algún día el mundo pesa demasiado… recuerda que me tienes. Que estoy contigo, que estoy para ti, que nunca voy a soltarte.</p>
+
+        <p>Quiero que recuerdes que eres lo mejor que me pasó, que eres mi paz, mi amor, mi vida. Que no hay un solo día en el que no te piense, no te sienta, no te ame.</p>
+
+        <p>Y si algún día el tiempo pasa y volvemos a leer esto juntos… quiero mirarte y saber que seguimos siendo tú y yo. Más fuertes, más unidos, más nuestros.</p>
+
+        <p>Porque pase lo que pase… siempre voy a elegirte.</p>
+    `
+},
+{
+    id: 8,
+    title: "A nuestras princesas, desde nuestro amor",
+    date: "Carta para el futuro",
+    image: "https://images.unsplash.com/photo-1511895426328-dc8714191300?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+    tag: "Familia",
+    tagColor: "bg-rose-400",
+    preview: "Si están leyendo esto, es porque el tiempo pasó, la vida avanzó… y el amor por el que tanto luchamos nos trajo hasta ustedes, nuestras princesas...",
+    content: `
+        <p>Mis princesas hermosas,</p>
+
+        <p>Si algún día están leyendo esto, quiero que sepan que estas palabras nacen desde lo más profundo de mi corazón. No son solo letras, no es solo una carta… es parte de nuestra historia, es parte del camino que recorrimos para que hoy ustedes existan, para que hoy seamos una familia, para que hoy estemos juntos.</p>
+
+        <p>Antes de que ustedes llegaran, antes de que sus voces llenaran nuestro hogar, antes de que sus risas iluminaran nuestra vida… existía una historia. La historia de su mamá y yo. Una historia que no siempre fue fácil, una historia que tuvo momentos difíciles, dudas, caídas, discusiones y lágrimas. Porque el amor real no es perfecto… el amor real se construye, se lucha, se cuida y se protege.</p>
+
+        <p>Hubo días en los que el camino parecía pesado, momentos en los que tuvimos que aprender, cambiar, crecer y entendernos. Hubo errores, hubo peleas, hubo silencios… pero nunca dejamos de amarnos. Nunca dejamos de elegirnos. Nunca dejamos de luchar por lo que sentíamos.</p>
+
+        <p>Y hoy, viéndolas a ustedes, entendemos que todo valió la pena. Cada obstáculo, cada prueba, cada momento difícil… nos llevó hasta aquí. Nos llevó a esta familia, a este hogar lleno de amor, a esta vida donde ustedes son nuestra mayor alegría.</p>
+
+        <p>Quiero que sepan algo, mis princesas… ustedes no nacieron solo del amor, nacieron de la lucha, de la paciencia, de la fe, de la decisión de no rendirnos. Porque el amor verdadero no es solo sentir bonito… es quedarse, es cuidar, es proteger, es elegir todos los días incluso cuando es difícil.</p>
+
+        <p>Yo, el hombre que escribe esto, alguna vez fue solo un joven soñando con una vida junto a la mujer que amaba. Soñaba con un hogar, con una familia, con hijas que iluminaran su vida… soñaba con ustedes. Y ahora que están aquí, ahora que puedo verlas, abrazarlas, escucharlas… entiendo que ustedes son el sueño hecho realidad.</p>
+
+        <p>Quiero que crezcan sabiendo que el amor es lo más fuerte que existe. Que la vida no siempre será fácil, pero que cuando algo vale la pena, se lucha, se cuida y no se abandona. Quiero que sepan que su mamá y yo seguimos luchando día a día por nuestro amor, no porque sea difícil… sino porque es valioso, porque es real, porque es nuestro.</p>
+
+        <p>Si algún día leen esto cuando sean mayores, quiero que recuerden algo: su papá y su mamá no fueron perfectos, pero siempre se amaron, siempre se eligieron, siempre caminaron juntos. Y gracias a ese amor… existen ustedes.</p>
+
+        <p>Ustedes son nuestra paz, nuestra alegría, nuestra razón. Son el reflejo del amor que nunca se rindió. Son nuestra historia viva.</p>
+
+        <p>Las amo con todo mi corazón, hoy, mañana y siempre.</p>
+
+        <p>Att: Papá ❤️</p>
+    `
+},
+{
+    id: 9,
+    title: "Carta para ti, mi amor, a través del tiempo",
+    date: "Siempre tú, por encima de todo",
+    image: "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+    tag: "No la leas hasta despues de unos años",
+    tagColor: "bg-gray-400",
+    preview: "Quizá no fui perfecto, quizá cometí errores, quizá el orgullo habló a veces… pero si hoy seguimos aquí, es porque mi amor por ti siempre fue más fuerte...",
+    content: `
+        <p>Mi amor,</p>
+
+        <p>Si algún día lees esto, quiero que sepas que estas palabras nacen desde lo más profundo de mí. No son solo letras, no son solo recuerdos… es la verdad de lo que siento por ti, de lo que fuimos, de lo que somos y de lo que siempre voy a querer que seamos.</p>
+
+        <p>No fui perfecto, y lo sé. Hubo momentos en los que me equivoqué, momentos en los que el orgullo habló antes que el corazón, momentos en los que el silencio pesó más que las palabras. Hubo errores, discusiones, heridas pequeñas que quizás dolieron más de lo que parecían. Pero incluso en medio de todo eso… nunca dejé de amarte.</p>
+
+        <p>Porque amarte no fue algo superficial, no fue algo momentáneo. Amarte fue aprender, crecer, cambiar, entender, mejorar. Amarte fue reconocer mis fallas y aun así querer ser mejor para ti, por ti, con tal de no perder lo que somos.</p>
+
+        <p>Tú te quedaste. Incluso cuando no era fácil. Incluso cuando el camino se volvió pesado. Incluso cuando amar implicaba paciencia, comprensión y fuerza. Y eso… eso nunca lo voy a olvidar.</p>
+
+        <p>Si hoy seguimos aquí, si hoy seguimos caminando juntos, es porque mi amor por ti fue más fuerte que mi ego, más fuerte que mi orgullo, más fuerte que cualquier momento difícil. Porque entendí que perder una discusión no es perder… perderte a ti sí lo sería.</p>
+
+        <p>Quiero que sepas que nunca fuiste una etapa, nunca fuiste solo un momento. Fuiste mi paz, mi lugar seguro, la persona que elegí amar incluso cuando amar significaba aprender a ser mejor. Porque contigo entendí que el amor verdadero no es perfecto… es real, es constante, es una decisión diaria.</p>
+
+        <p>Si alguna vez vuelvo a equivocarme, si alguna vez fallo… quiero que recuerdes esto: mi amor por ti siempre será más grande que mis errores. Más grande que cualquier discusión. Más grande que cualquier momento oscuro.</p>
+
+        <p>Voy a seguir eligiéndote. Hoy, mañana y siempre. No por costumbre, no por miedo, sino porque eres tú… la mujer que amo, la mujer que quiero en mi vida, la mujer que siempre voy a elegir por encima de todo.</p>
+
+        <p>Porque amarte no fue algo pasajero… fue, es y siempre será mi decisión más real.</p>
+
+        <p>Te amo.</p>
+    `
+},
+
+
+];
+
+        // --- LOGIC ---
+
+        // 1. Render Cards
+        function renderCards() {
+            const container = document.getElementById('cards-container');
+            container.innerHTML = '';
+            
+            letters.forEach(letter => {
+                const isRead = localStorage.getItem(`letter_read_${letter.id}`) === 'true';
+                const readClass = isRead ? 'read' : '';
+                const readBadge = isRead ? '<span class="read-badge absolute top-4 right-4 bg-green-500 text-white text-xs font-bold px-2 py-1 rounded shadow"><i class="fas fa-check"></i> Leído</span>' : '';
+
+                const cardHTML = `
+                    <article class="letter-card ${readClass} bg-white rounded-2xl overflow-hidden shadow-xl border border-pink-100 flex flex-col h-full cursor-pointer group relative" onclick="openLetter(${letter.id})">
+                        ${readBadge}
+                        <div class="h-64 overflow-hidden relative">
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent z-10"></div>
+                            <img src="${letter.image}" alt="${letter.title}" class="w-full h-full object-cover transform group-hover:scale-110 transition duration-700">
+                            <div class="absolute bottom-4 left-4 z-20">
+                                <span class="${letter.tagColor} text-white text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wide">${letter.tag}</span>
+                            </div>
+                        </div>
+                        <div class="p-8 flex-1 flex flex-col">
+                            <div class="flex items-center text-sm text-gray-400 mb-3 space-x-2">
+                                <i class="far fa-calendar-alt"></i>
+                                <span>${letter.date}</span>
+                            </div>
+                            <h3 class="font-serif text-3xl font-bold text-gray-800 mb-3 group-hover:text-rose-600 transition">${letter.title}</h3>
+                            <p class="text-gray-600 mb-6 line-clamp-3 flex-1">${letter.preview}</p>
+                            <div class="flex items-center text-rose-600 font-bold group-hover:translate-x-2 transition-transform duration-300">
+                                Leer carta completa <i class="fas fa-arrow-right ml-2"></i>
+                            </div>
+                        </div>
+                    </article>
+                `;
+                container.innerHTML += cardHTML;
+            });
+        }
+
+        // 2. Navigation System (SPA)
+        function navigateTo(viewId) {
+            document.querySelectorAll('.page-section').forEach(el => {
+                el.classList.remove('active');
+                setTimeout(() => {
+                    if(!el.classList.contains('active')) el.style.display = 'none';
+                }, 500);
+            });
+
+            const target = document.getElementById(`view-${viewId}`);
+            target.style.display = 'block';
+            setTimeout(() => {
+                target.classList.add('active');
+            }, 10);
+
+            window.scrollTo(0, 0);
+            document.getElementById('mobile-menu').classList.add('hidden');
+        }
+
+        // 3. Open Letter Logic
+        function openLetter(id) {
+            const letter = letters.find(l => l.id === id);
+            if (!letter) return;
+
+            localStorage.setItem(`letter_read_${id}`, 'true');
+            renderCards();
+
+            document.getElementById('letter-title').innerText = letter.title;
+            document.getElementById('letter-date').innerText = letter.date;
+            document.getElementById('letter-body').innerHTML = letter.content;
+
+            navigateTo('letter');
+        }
+
+        // 4. Time Counter Logic
+        function updateTimeCounter() {
+            const startDate = new Date('2025-06-24T00:00:00');
+            const now = new Date();
+            let diff = now - startDate;
+            
+            if (diff < 0) {
+                document.getElementById('time-counter').innerText = "Pronto comenzaremos ❤️";
+                return;
+            }
+            
+            const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+            const minutes = Math.floor((diff / (1000 * 60)) % 60);
+            const seconds = Math.floor((diff / 1000) % 60);
+
+            document.getElementById('time-counter').innerText = 
+                `${days} días, ${hours}h ${minutes}m ${seconds}s`;
+        }
+
+        // 5. Mobile Menu
+        const btn = document.getElementById('mobile-menu-btn');
+        const menu = document.getElementById('mobile-menu');
+        btn.addEventListener('click', () => {
+            menu.classList.toggle('hidden');
+        });
+
+        // Initialize
+        window.addEventListener('DOMContentLoaded', () => {
+            renderCards();
+            updateTimeCounter();
+            setInterval(updateTimeCounter, 1000);
+            
+            window.addEventListener('scroll', () => {
+                const navbar = document.getElementById('navbar');
+                if (window.scrollY > 50) {
+                    navbar.classList.add('shadow-md');
+                    navbar.classList.replace('bg-white/80', 'bg-white/95');
+                } else {
+                    navbar.classList.remove('shadow-md');
+                    navbar.classList.replace('bg-white/95', 'bg-white/80');
+                }
+            });
+        });
+
+    </script>
+</body>
+</html>
+
