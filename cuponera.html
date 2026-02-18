@@ -1,0 +1,931 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cuponera de Amor 💕</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Fredoka+One&display=swap" rel="stylesheet">
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  background: #fdf6ff;
+  font-family: 'Nunito', sans-serif;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* ── HEADER ── */
+.page-header {
+  text-align: center;
+  padding: 36px 20px 20px;
+}
+
+.page-title {
+  font-family: 'Fredoka One', cursive;
+  font-size: clamp(1.6rem, 5vw, 2.4rem);
+  color: #b07ecb;
+  letter-spacing: .04em;
+  line-height: 1.2;
+}
+
+.page-title span { display: block; font-size: .65em; color: #c9a7de; letter-spacing: .12em; }
+.hearts-deco { display: flex; justify-content: center; gap: 10px; margin-top: 10px; font-size: 1.2rem; }
+
+/* ── CONTADOR GLOBAL ── */
+.global-counter {
+  background: white;
+  border: 2.5px solid #e8d0f5;
+  border-radius: 20px;
+  padding: 14px 30px;
+  margin: 0 20px 28px;
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  box-shadow: 0 4px 18px rgba(180,130,210,.12);
+  font-weight: 700;
+  color: #9b6bb5;
+  font-size: .95rem;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.counter-badge {
+  background: linear-gradient(135deg, #d8a4f0, #b07ecb);
+  color: white;
+  font-size: 1.6rem;
+  font-weight: 900;
+  font-family: 'Fredoka One', cursive;
+  width: 52px; height: 52px;
+  border-radius: 14px;
+  display: flex; align-items: center; justify-content: center;
+  box-shadow: 0 4px 14px rgba(180,100,220,.3);
+}
+
+/* ── EDITOR ── */
+.editor-wrap {
+  width: 92%;
+  max-width: 560px;
+  background: white;
+  border-radius: 24px;
+  border: 2.5px solid #f0e0f8;
+  padding: 26px 24px;
+  margin-bottom: 30px;
+  box-shadow: 0 6px 28px rgba(180,130,210,.1);
+}
+
+.editor-title {
+  font-family: 'Fredoka One', cursive;
+  font-size: 1.15rem;
+  color: #b07ecb;
+  margin-bottom: 18px;
+  text-align: center;
+  letter-spacing: .03em;
+}
+
+.editor-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+
+@media(max-width:500px){ .editor-grid{ grid-template-columns:1fr; } }
+
+.field { display: flex; flex-direction: column; gap: 5px; }
+.field.full { grid-column: 1/-1; }
+
+.field label {
+  font-size: .75rem;
+  font-weight: 800;
+  letter-spacing: .07em;
+  text-transform: uppercase;
+  color: #c09ad0;
+}
+
+.field input[type=text],
+.field input[type=number] {
+  background: #fdf5ff;
+  border: 2px solid #ead6f8;
+  border-radius: 12px;
+  padding: 10px 14px;
+  font-family: 'Nunito', sans-serif;
+  font-size: .92rem;
+  font-weight: 700;
+  color: #5a3a70;
+  outline: none;
+  transition: border-color .2s, box-shadow .2s;
+}
+
+.field input:focus {
+  border-color: #c07ae0;
+  box-shadow: 0 0 0 3px rgba(192,122,224,.15);
+}
+
+/* ── COLOR SWATCHES ── */
+.color-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 4px;
+}
+
+.color-swatch {
+  width: 32px; height: 32px;
+  border-radius: 50%;
+  cursor: pointer;
+  border: 3px solid transparent;
+  transition: transform .2s, border-color .2s;
+  position: relative;
+  flex-shrink: 0;
+}
+
+.color-swatch:hover { transform: scale(1.18); }
+.color-swatch.active { border-color: #5a3a70 !important; box-shadow: 0 0 0 2px white inset; }
+
+.color-swatch.custom-swatch {
+  border: 2.5px dashed #c09ad0 !important;
+  background: transparent !important;
+  display: flex; align-items: center; justify-content: center;
+  font-size: .85rem; color: #c09ad0;
+  overflow: hidden;
+}
+
+.color-swatch.custom-swatch input[type=color] {
+  position: absolute; inset: 0; width: 100%; height: 100%;
+  opacity: 0; cursor: pointer; border: none; padding: 0;
+}
+
+/* ── BOTÓN CREAR ── */
+.btn-create {
+  width: 100%;
+  margin-top: 18px;
+  padding: 14px;
+  border: none;
+  border-radius: 16px;
+  background: linear-gradient(135deg, #d8a4f0, #b07ecb);
+  color: white;
+  font-family: 'Fredoka One', cursive;
+  font-size: 1.15rem;
+  letter-spacing: .04em;
+  cursor: pointer;
+  transition: all .25s;
+  box-shadow: 0 6px 20px rgba(180,100,220,.35);
+  display: flex; align-items: center; justify-content: center; gap: 10px;
+}
+
+.btn-create:hover { transform: translateY(-2px); box-shadow: 0 10px 28px rgba(180,100,220,.45); }
+.btn-create:active { transform: translateY(0); }
+
+/* ── GRID DE CUPONES ── */
+.coupons-grid {
+  width: 92%;
+  max-width: 920px;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+  gap: 22px;
+  padding-bottom: 60px;
+}
+
+/* ── CUPÓN ── */
+.coupon-wrap {
+  animation: popIn .4s cubic-bezier(.23,1,.32,1) both;
+}
+
+@keyframes popIn {
+  from { opacity:0; transform:scale(.88) translateY(12px); }
+  to   { opacity:1; transform:scale(1) translateY(0); }
+}
+
+.coupon-card {
+  border-radius: 18px;
+  border: 3px solid;
+  position: relative;
+  background: white;
+  box-shadow: 0 6px 24px rgba(0,0,0,.1);
+  overflow: visible;
+}
+
+.coupon-inner {
+  display: flex;
+  align-items: stretch;
+  min-height: 170px;
+  border-radius: 15px;
+  overflow: hidden;
+}
+
+/* STUB IZQUIERDO */
+.coupon-stub {
+  width: 40px;
+  min-width: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-right: 2.5px dashed rgba(255,255,255,.75);
+  flex-shrink: 0;
+  position: relative;
+}
+
+.coupon-stub-text {
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+  font-size: .6rem;
+  font-weight: 900;
+  letter-spacing: .13em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,.88);
+  white-space: nowrap;
+}
+
+/* Muescas */
+.notch {
+  position: absolute;
+  width: 18px; height: 18px;
+  border-radius: 50%;
+  z-index: 5;
+}
+
+.notch-l-top    { top: -9px;  left: calc(40px - 9px); }
+.notch-l-bottom { bottom: -9px; left: calc(40px - 9px); }
+.notch-r-top    { top: -9px;  right: calc(40px - 9px); }
+.notch-r-bottom { bottom: -9px; right: calc(40px - 9px); }
+
+/* CUERPO */
+.coupon-body {
+  flex: 1;
+  padding: 16px 14px 12px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Patrón de fondo */
+.coupon-pattern {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 1;
+}
+
+.coupon-top-icons {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: relative;
+  z-index: 1;
+}
+
+.icon-group {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.deco-star { font-size: .75rem; }
+
+.coupon-center {
+  text-align: center;
+  position: relative;
+  z-index: 1;
+  padding: 4px 0;
+}
+
+.coupon-subtitle {
+  font-size: .72rem;
+  font-weight: 800;
+  letter-spacing: .09em;
+  text-transform: uppercase;
+  opacity: .6;
+  margin-bottom: 3px;
+}
+
+.coupon-main-text {
+  font-family: 'Fredoka One', cursive;
+  font-size: clamp(1.45rem, 3.5vw, 1.85rem);
+  line-height: 1.15;
+  letter-spacing: .02em;
+}
+
+.coupon-bottom-icons {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: relative;
+  z-index: 1;
+  margin-bottom: 4px;
+}
+
+/* FOOTER */
+.coupon-footer {
+  position: relative;
+  z-index: 1;
+  border-top: 1.5px dashed rgba(0,0,0,.15);
+  padding-top: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 4px;
+  font-size: .68rem;
+  font-weight: 800;
+}
+
+.uses-wrap {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  background: rgba(255,255,255,.65);
+  border-radius: 20px;
+  padding: 4px 9px;
+  border: 1.5px solid rgba(0,0,0,.08);
+}
+
+.uses-dots {
+  display: flex;
+  gap: 3px;
+}
+
+.use-dot {
+  width: 10px; height: 10px;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: all .2s;
+  border: 2px solid rgba(0,0,0,.15);
+  background: rgba(0,0,0,.1);
+}
+
+.use-dot.used { background: rgba(0,0,0,.45); border-color: rgba(0,0,0,.35); }
+.use-dot:hover { transform: scale(1.3); }
+
+/* STUB DERECHO */
+.coupon-stub-right {
+  width: 40px;
+  min-width: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-left: 2.5px dashed rgba(255,255,255,.75);
+  flex-shrink: 0;
+}
+
+.coupon-stub-right-text {
+  writing-mode: vertical-rl;
+  font-size: .6rem;
+  font-weight: 900;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,.85);
+  white-space: nowrap;
+}
+
+/* BOTONES ACCIÓN */
+.coupon-actions {
+  display: flex;
+  gap: 8px;
+  margin-top: 10px;
+}
+
+.coupon-btn {
+  flex: 1;
+  padding: 8px;
+  border: none;
+  border-radius: 10px;
+  font-family: 'Nunito', sans-serif;
+  font-size: .76rem;
+  font-weight: 800;
+  cursor: pointer;
+  transition: all .2s;
+  display: flex; align-items: center; justify-content: center; gap: 5px;
+}
+
+.btn-dl {
+  background: rgba(0,0,0,.06);
+  color: rgba(0,0,0,.55);
+  border: 1.5px solid rgba(0,0,0,.1);
+}
+
+.btn-dl:hover { background: rgba(0,0,0,.12); }
+
+.btn-del {
+  background: rgba(255,80,80,.07);
+  color: rgba(190,40,40,.7);
+  border: 1.5px solid rgba(200,50,50,.13);
+}
+
+.btn-del:hover { background: rgba(255,80,80,.14); }
+
+/* EMPTY STATE */
+.empty-state {
+  text-align: center;
+  padding: 50px 20px;
+  color: #c09ad0;
+  font-size: 1rem;
+  font-weight: 700;
+  grid-column: 1/-1;
+}
+
+.empty-state .big-emoji { font-size: 4rem; display: block; margin-bottom: 16px; }
+
+/* TOAST */
+.toast {
+  position: fixed; bottom: 24px; right: 24px;
+  background: white;
+  border: 2px solid #e8d0f5;
+  border-radius: 14px;
+  padding: 12px 20px;
+  font-weight: 800;
+  color: #8a55a8;
+  font-size: .88rem;
+  box-shadow: 0 10px 30px rgba(180,100,220,.2);
+  opacity: 0; transform: translateY(14px);
+  transition: all .3s cubic-bezier(.23,1,.32,1);
+  z-index: 999;
+  pointer-events: none;
+}
+
+.toast.show { opacity:1; transform:translateY(0); }
+
+#dl-canvas { display: none; }
+</style>
+</head>
+<body>
+
+<div class="page-header">
+  <div class="page-title">
+    CUPONES DE AMOR
+    <span>✦ ÑIÑIÑI ✦</span>
+  </div>
+  <div class="hearts-deco"> ❤️ ❤️ ❤️ ❤️</div>
+</div>
+
+<div class="global-counter">
+  <div class="counter-badge" id="global-count">0</div>
+  <div>
+    <div style="font-size:1rem">Cupones creados hoy</div>
+    <div style="font-size:.78rem;font-weight:600;color:#c09ad0">¡Sigue llenando tu cuponera!</div>
+  </div>
+</div>
+
+<!-- EDITOR -->
+<div class="editor-wrap">
+  <div class="editor-title">✨ Crear nuevo cupón</div>
+  <div class="editor-grid">
+
+    <div class="field full">
+      <label>Encabezado (vale por...)</label>
+      <input type="text" id="inp-subtitle" value="VALE POR UNA" maxlength="22">
+    </div>
+
+    <div class="field full">
+      <label>Nombre del cupón</label>
+      <input type="text" id="inp-main" placeholder="CITA ROMÁNTICA" maxlength="28">
+    </div>
+
+    <div class="field">
+      <label>Número de usos</label>
+      <input type="number" id="inp-uses" value="1" min="1" max="10">
+    </div>
+
+    <div class="field">
+      <label>Fecha de emisión</label>
+      <input type="text" id="inp-date" maxlength="15">
+    </div>
+
+    <div class="field full">
+      <label>Color del cupón</label>
+      <div class="color-row" id="color-row"></div>
+    </div>
+
+  </div>
+  <button class="btn-create" onclick="createCoupon()">🎟️ Crear cupón</button>
+</div>
+
+<!-- CUPONES -->
+<div class="coupons-grid" id="coupons-grid">
+  <div class="empty-state">
+    Aquí aparecerán tus cupones mi amor.  
+</div>
+</div>
+
+<canvas id="dl-canvas" width="900" height="360"></canvas>
+<div class="toast" id="toast"></div>
+
+<script>
+const COLORS = [
+  { name:'Rosa',     bg:'#fde8e8', border:'#e8a0a0', stub:'#e8a0a0', text:'#7a3a3a' },
+  { name:'Lila',     bg:'#f0e4f8', border:'#c9a5e0', stub:'#c9a5e0', text:'#5a3070' },
+  { name:'Azul',     bg:'#deeef9', border:'#90c3e8', stub:'#90c3e8', text:'#1e4e78' },
+  { name:'Verde',    bg:'#dff5e8', border:'#8ecfa8', stub:'#8ecfa8', text:'#1e5c38' },
+  { name:'Amarillo', bg:'#fdf5c8', border:'#e0c870', stub:'#e0c870', text:'#5a4a00' },
+  { name:'Naranja',  bg:'#fde8d0', border:'#f0b070', stub:'#f0b070', text:'#7a3800' },
+  { name:'Fucsia',   bg:'#fce4f0', border:'#e888c0', stub:'#e888c0', text:'#7a1855' },
+  { name:'Menta',    bg:'#d8f5ee', border:'#78d4bc', stub:'#78d4bc', text:'#0e5c46' },
+];
+
+let selectedColor = COLORS[0];
+let coupons = [];
+let couponCounter = 0;
+
+// ── INIT ──
+function init() {
+  // Colores
+  const row = document.getElementById('color-row');
+  COLORS.forEach((c, i) => {
+    const sw = document.createElement('div');
+    sw.className = 'color-swatch' + (i === 0 ? ' active' : '');
+    sw.style.background = c.stub;
+    sw.title = c.name;
+    sw.onclick = () => {
+      selectedColor = c;
+      row.querySelectorAll('.color-swatch').forEach(s => s.classList.remove('active'));
+      sw.classList.add('active');
+    };
+    row.appendChild(sw);
+  });
+
+  // Custom color
+  const cust = document.createElement('div');
+  cust.className = 'color-swatch custom-swatch';
+  cust.title = 'Personalizado';
+  cust.innerHTML = `+<input type="color" value="#e8a0a0" oninput="applyCustom(this.value)">`;
+  row.appendChild(cust);
+
+  // Fecha hoy
+  document.getElementById('inp-date').value = todayStr();
+}
+
+function applyCustom(hex) {
+  selectedColor = {
+    name: 'Custom',
+    bg: lighten(hex, .72),
+    border: hex,
+    stub: hex,
+    text: darken(hex, .38)
+  };
+  document.querySelectorAll('.color-swatch').forEach(s => s.classList.remove('active'));
+}
+
+function lighten(hex, r) {
+  const n = parseInt(hex.replace('#',''), 16);
+  const [rv,gv,bv] = [n>>16, (n>>8)&255, n&255].map(c => Math.round(c + (255-c)*r));
+  return `rgb(${rv},${gv},${bv})`;
+}
+
+function darken(hex, r) {
+  const n = parseInt(hex.replace('#',''), 16);
+  const [rv,gv,bv] = [n>>16, (n>>8)&255, n&255].map(c => Math.round(c*r));
+  return `rgb(${rv},${gv},${bv})`;
+}
+
+function todayStr() {
+  const d = new Date();
+  const m = ['ENE','FEB','MAR','ABR','MAY','JUN','JUL','AGO','SEP','OCT','NOV','DIC'];
+  return `${d.getDate()} ${m[d.getMonth()]} ${d.getFullYear()}`;
+}
+
+// ── CREAR ──
+function createCoupon() {
+  const subtitle = document.getElementById('inp-subtitle').value.trim() || 'VALE POR UNA';
+  const main = document.getElementById('inp-main').value.trim();
+  if (!main) { toast('✏️ Escribe el nombre del cupón!'); return; }
+  const uses = Math.min(10, Math.max(1, parseInt(document.getElementById('inp-uses').value) || 1));
+  const date = document.getElementById('inp-date').value.trim() || todayStr();
+
+  couponCounter++;
+  const num = String(couponCounter).padStart(3,'0');
+
+  coupons.unshift({ id: Date.now(), num, subtitle, main, uses, usesLeft: uses, date, color: {...selectedColor} });
+  document.getElementById('global-count').textContent = couponCounter;
+  renderGrid();
+  showToast(`🎟️ Cupón #${num} creado!`);
+  document.getElementById('inp-main').value = '';
+}
+
+function deleteCoupon(id) {
+  coupons = coupons.filter(c => c.id !== id);
+  renderGrid();
+}
+
+function toggleUse(id, i) {
+  const c = coupons.find(x => x.id === id);
+  if (!c) return;
+  const used = c.uses - c.usesLeft;
+  c.usesLeft = i < used ? c.uses - i : c.uses - (i + 1);
+  c.usesLeft = Math.max(0, Math.min(c.uses, c.usesLeft));
+  renderGrid();
+}
+
+// ── RENDER ──
+function renderGrid() {
+  const grid = document.getElementById('coupons-grid');
+  grid.innerHTML = '';
+  if (!coupons.length) {
+    grid.innerHTML = `<div class="empty-state">Tampoco uses mucho el creador de cupones 😡</div>`;
+    return;
+  }
+  coupons.forEach(c => {
+    const w = document.createElement('div');
+    w.className = 'coupon-wrap';
+    w.innerHTML = couponHTML(c);
+    grid.appendChild(w);
+  });
+}
+
+function couponHTML(c) {
+  const col = c.color;
+  const usedCount = c.uses - c.usesLeft;
+
+  // Dots de usos
+  const dots = Array.from({length: c.uses}, (_,i) =>
+    `<div class="use-dot ${i < usedCount ? 'used' : ''}" onclick="toggleUse(${c.id},${i})" title="Clic para marcar uso ${i+1}"></div>`
+  ).join('');
+
+  // SVG del sobre decorativo (inline pequeño)
+  const envelope = (color) => `<svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+    <rect x="2" y="5" width="20" height="14" rx="3" stroke="${color}" stroke-width="2" fill="none"/>
+    <polyline points="2,8 12,14 22,8" stroke="${color}" stroke-width="1.8" fill="none"/>
+    <line x1="2" y1="19" x2="8" y2="13" stroke="${color}" stroke-width="1.5"/>
+    <line x1="22" y1="19" x2="16" y2="13" stroke="${color}" stroke-width="1.5"/>
+  </svg>`;
+
+  const heart = (color) => `<svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+    <path d="M12 21s-9-7-9-13a5 5 0 0 1 9-3 5 5 0 0 1 9 3c0 6-9 13-9 13z" stroke="${color}" stroke-width="2" fill="${col.bg}"/>
+  </svg>`;
+
+  // Patrón SVG de fondo (corazones + sobres)
+  const patternSvg = `data:image/svg+xml,${encodeURIComponent(`<svg xmlns="http://www.w3.org/2000/svg" width="54" height="54">
+    <text x="6" y="22" font-size="15" fill="${col.border}" opacity="0.35">♥</text>
+    <text x="30" y="46" font-size="11" fill="${col.border}" opacity="0.25">✉</text>
+    <text x="28" y="18" font-size="9" fill="${col.border}" opacity="0.2">♥</text>
+  </svg>`)}`;
+
+  return `
+  <div class="coupon-card" style="border-color:${col.border}; background:${col.bg};">
+    <!-- Muescas -->
+    <div class="notch notch-l-top"    style="background:#fdf6ff; border:3px solid ${col.border};"></div>
+    <div class="notch notch-l-bottom" style="background:#fdf6ff; border:3px solid ${col.border};"></div>
+    <div class="notch notch-r-top"    style="background:#fdf6ff; border:3px solid ${col.border};"></div>
+    <div class="notch notch-r-bottom" style="background:#fdf6ff; border:3px solid ${col.border};"></div>
+
+    <div class="coupon-inner">
+      <!-- STUB IZQ -->
+      <div class="coupon-stub" style="background:${col.stub};">
+        <span class="coupon-stub-text">Cupón ${c.num}</span>
+      </div>
+
+      <!-- CUERPO -->
+      <div class="coupon-body">
+        <!-- Patrón fondo -->
+        <div class="coupon-pattern" style="background-image:url('${patternSvg}');background-size:54px 54px;"></div>
+
+        <!-- Icons top -->
+        <div class="coupon-top-icons">
+          <div class="icon-group">
+            <span class="deco-star" style="color:${col.border}">✦</span>
+            ${envelope(col.border)}
+            <span class="deco-star" style="color:${col.border}">✦</span>
+          </div>
+          <div class="icon-group">
+            <span class="deco-star" style="color:${col.border}">✦</span>
+            ${envelope(col.border)}
+            <span class="deco-star" style="color:${col.border}">✦</span>
+          </div>
+        </div>
+
+        <!-- Texto central -->
+        <div class="coupon-center">
+          <div class="coupon-subtitle" style="color:${col.text};">${c.subtitle}</div>
+          <div class="coupon-main-text" style="color:${col.text};">${c.main}</div>
+        </div>
+
+        <!-- Icons bottom -->
+        <div class="coupon-bottom-icons">
+          <div class="icon-group">
+            <span class="deco-star" style="color:${col.border}">✦</span>
+            ${heart(col.border)}
+            <span class="deco-star" style="color:${col.border}">✦</span>
+          </div>
+          <div class="icon-group">
+            <span class="deco-star" style="color:${col.border}">✦</span>
+            ${heart(col.border)}
+            <span class="deco-star" style="color:${col.border}">✦</span>
+          </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="coupon-footer" style="color:${col.text};">
+          <span style="opacity:.65">📅 ${c.date}</span>
+
+          <div class="uses-wrap" style="border-color:${col.border}50;">
+            <span style="opacity:.7">Usos</span>
+            <div class="uses-dots">${dots}</div>
+            <span style="opacity:.8">${c.usesLeft}/${c.uses}</span>
+          </div>
+
+          <span style="opacity:.5">cupón de amor</span>
+        </div>
+      </div>
+
+      <!-- STUB DER -->
+      <div class="coupon-stub-right" style="background:${col.stub};">
+        <span class="coupon-stub-right-text">amor de cupón</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="coupon-actions">
+    <button class="coupon-btn btn-dl" onclick="downloadCoupon(${c.id})">⬇️ Descargar</button>
+    <button class="coupon-btn btn-del" onclick="deleteCoupon(${c.id})">🗑️ Eliminar</button>
+  </div>`;
+}
+
+// ── DESCARGA ──
+function downloadCoupon(id) {
+  const c = coupons.find(x => x.id === id);
+  if (!c) return;
+
+  const canvas = document.getElementById('dl-canvas');
+  const ctx = canvas.getContext('2d');
+  const W = 900, H = 360, pad = 18, stubW = 72, r = 22;
+  const col = c.color;
+
+  ctx.clearRect(0, 0, W, H);
+
+  // Sombra exterior
+  ctx.save();
+  ctx.shadowColor = 'rgba(0,0,0,.2)';
+  ctx.shadowBlur = 32; ctx.shadowOffsetY = 12;
+  rrect(ctx, pad, pad, W-pad*2, H-pad*2, r, col.bg);
+  ctx.restore();
+
+  // Fondo principal
+  rrect(ctx, pad, pad, W-pad*2, H-pad*2, r, col.bg, col.border, 4);
+
+  // Patrón corazones fondo
+  ctx.save();
+  ctx.globalAlpha = .2;
+  ctx.fillStyle = col.border;
+  ctx.font = '22px serif';
+  for(let row=0; row<7; row++) for(let col2=0; col2<16; col2++) {
+    ctx.fillText('♥', pad+40 + col2*52 + (row%2)*24, pad+36 + row*45);
+  }
+  ctx.restore();
+
+  // Stub izquierdo
+  ctx.save();
+  ctx.beginPath();
+  ctx.moveTo(pad+r, pad);
+  ctx.lineTo(pad+stubW, pad); ctx.lineTo(pad+stubW, H-pad);
+  ctx.lineTo(pad+r, H-pad);
+  ctx.quadraticCurveTo(pad, H-pad, pad, H-pad-r);
+  ctx.lineTo(pad, pad+r);
+  ctx.quadraticCurveTo(pad, pad, pad+r, pad);
+  ctx.closePath();
+  ctx.fillStyle = col.stub; ctx.fill();
+  ctx.restore();
+
+  // Stub derecho
+  ctx.save();
+  ctx.beginPath();
+  ctx.moveTo(W-pad-stubW, pad);
+  ctx.lineTo(W-pad-r, pad);
+  ctx.quadraticCurveTo(W-pad, pad, W-pad, pad+r);
+  ctx.lineTo(W-pad, H-pad-r);
+  ctx.quadraticCurveTo(W-pad, H-pad, W-pad-r, H-pad);
+  ctx.lineTo(W-pad-stubW, H-pad); ctx.closePath();
+  ctx.fillStyle = col.stub; ctx.fill();
+  ctx.restore();
+
+  // Dashed separadores
+  ctx.save();
+  ctx.setLineDash([6,6]);
+  ctx.strokeStyle = 'rgba(255,255,255,.8)';
+  ctx.lineWidth = 2;
+  ctx.beginPath(); ctx.moveTo(pad+stubW, pad+22); ctx.lineTo(pad+stubW, H-pad-22); ctx.stroke();
+  ctx.beginPath(); ctx.moveTo(W-pad-stubW, pad+22); ctx.lineTo(W-pad-stubW, H-pad-22); ctx.stroke();
+  ctx.setLineDash([]);
+  ctx.restore();
+
+  // Muescas
+  [[pad+stubW,pad+18],[pad+stubW,H-pad-18],[W-pad-stubW,pad+18],[W-pad-stubW,H-pad-18]].forEach(([nx,ny]) => {
+    ctx.beginPath(); ctx.arc(nx, ny, 13, 0, Math.PI*2);
+    ctx.fillStyle = '#fdf6ff'; ctx.fill();
+    ctx.strokeStyle = col.border; ctx.lineWidth = 3.5; ctx.stroke();
+  });
+
+  // Texto stub izq
+  ctx.save();
+  ctx.translate(pad+stubW/2, H/2);
+  ctx.rotate(-Math.PI/2);
+  ctx.fillStyle = 'rgba(255,255,255,.9)';
+  ctx.font = 'bold 15px sans-serif';
+  ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+  ctx.fillText(`Cupón ${c.num}`, 0, 0);
+  ctx.restore();
+
+  // Texto stub der
+  ctx.save();
+  ctx.translate(W-pad-stubW/2, H/2);
+  ctx.rotate(Math.PI/2);
+  ctx.fillStyle = 'rgba(255,255,255,.85)';
+  ctx.font = 'bold 14px sans-serif';
+  ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+  ctx.fillText('amor de cupón', 0, 0);
+  ctx.restore();
+
+  // Íconos ✦ ✉ ✦
+  const cx = pad + stubW + (W - pad*2 - stubW*2)/2;
+  ctx.fillStyle = col.border;
+  ctx.font = '17px serif';
+  ctx.textAlign = 'center';
+  ctx.fillText('✦  ✉  ✦', cx - 130, pad + 62);
+  ctx.fillText('✦  ✉  ✦', cx + 130, pad + 62);
+
+  // Subtitle
+  ctx.fillStyle = col.text;
+  ctx.globalAlpha = .65;
+  ctx.font = '600 20px sans-serif';
+  ctx.textAlign = 'center';
+  ctx.fillText(c.subtitle.toUpperCase(), cx, H/2 - 42);
+  ctx.globalAlpha = 1;
+
+  // Main text
+  ctx.fillStyle = col.text;
+  const mainSize = c.main.length > 16 ? 50 : 62;
+  ctx.font = `900 ${mainSize}px sans-serif`;
+  ctx.textAlign = 'center';
+  ctx.textBaseline = 'middle';
+  wrapCtx(ctx, c.main, cx, H/2 + 4, W-pad*2-stubW*2-60, mainSize*1.25);
+
+  // Íconos ✦ ♥ ✦ abajo
+  ctx.textBaseline = 'alphabetic';
+  ctx.globalAlpha = .55;
+  ctx.font = '16px serif';
+  ctx.fillText('✦  ♥  ✦', cx - 130, H-pad-68);
+  ctx.fillText('✦  ♥  ✦', cx + 130, H-pad-68);
+  ctx.globalAlpha = 1;
+
+  // Línea dashed footer
+  ctx.save();
+  ctx.setLineDash([5,5]);
+  ctx.strokeStyle = 'rgba(0,0,0,.13)';
+  ctx.lineWidth = 1.5;
+  ctx.beginPath();
+  ctx.moveTo(pad+stubW+18, H-pad-52); ctx.lineTo(W-pad-stubW-18, H-pad-52);
+  ctx.stroke();
+  ctx.setLineDash([]);
+  ctx.restore();
+
+  // Footer textos
+  ctx.globalAlpha = .6;
+  ctx.font = '600 15px sans-serif';
+  ctx.fillStyle = col.text;
+  ctx.textAlign = 'left';  ctx.fillText(`📅 ${c.date}`, pad+stubW+20, H-pad-28);
+  ctx.textAlign = 'center'; ctx.fillText(`Usos: ${c.usesLeft}/${c.uses}`, cx, H-pad-28);
+  ctx.textAlign = 'right';  ctx.fillText('cupón de amor', W-pad-stubW-20, H-pad-28);
+  ctx.globalAlpha = 1;
+
+  const link = document.createElement('a');
+  link.download = `cupon-amor-${c.num}.png`;
+  link.href = canvas.toDataURL('image/png', 1.0);
+  link.click();
+  showToast(`⬇️ Cupón #${c.num} descargado!`);
+}
+
+function rrect(ctx, x, y, w, h, r, fill, stroke, sw) {
+  ctx.beginPath();
+  ctx.moveTo(x+r,y); ctx.lineTo(x+w-r,y); ctx.quadraticCurveTo(x+w,y,x+w,y+r);
+  ctx.lineTo(x+w,y+h-r); ctx.quadraticCurveTo(x+w,y+h,x+w-r,y+h);
+  ctx.lineTo(x+r,y+h); ctx.quadraticCurveTo(x,y+h,x,y+h-r);
+  ctx.lineTo(x,y+r); ctx.quadraticCurveTo(x,y,x+r,y);
+  ctx.closePath();
+  if(fill){ctx.fillStyle=fill;ctx.fill();}
+  if(stroke){ctx.strokeStyle=stroke;ctx.lineWidth=sw||1;ctx.stroke();}
+}
+
+function wrapCtx(ctx, text, x, y, maxW, lh) {
+  const words = text.split(' ');
+  let line=''; const lines=[];
+  for(const w of words){
+    const t=line+w+' ';
+    if(ctx.measureText(t).width>maxW&&line){lines.push(line.trim());line=w+' ';}
+    else line=t;
+  }
+  lines.push(line.trim());
+  const sy=y-((lines.length-1)*lh)/2;
+  lines.forEach((l,i)=>ctx.fillText(l,x,sy+i*lh));
+}
+
+function showToast(msg) {
+  const t=document.getElementById('toast');
+  t.textContent=msg; t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'),2600);
+}
+
+init();
+</script>
+</body>
+</html>

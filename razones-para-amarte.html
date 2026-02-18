@@ -1,0 +1,703 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title> Razones para Amarte 💕</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Fredoka+One&display=swap" rel="stylesheet">
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  background: #fdf6ff;
+  font-family: 'Nunito', sans-serif;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* ── HEADER ── */
+.page-header {
+  text-align: center;
+  padding: 36px 20px 20px;
+}
+
+.page-title {
+  font-family: 'Fredoka One', cursive;
+  font-size: clamp(1.6rem, 5vw, 2.4rem);
+  color: #b07ecb;
+  letter-spacing: .04em;
+  line-height: 1.2;
+}
+
+.page-title span { display: block; font-size: .65em; color: #c9a7de; letter-spacing: .12em; }
+.hearts-deco { display: flex; justify-content: center; gap: 10px; margin-top: 10px; font-size: 1.2rem; }
+
+/* ── CONTADOR GLOBAL ── */
+.global-counter {
+  background: white;
+  border: 2.5px solid #e8d0f5;
+  border-radius: 20px;
+  padding: 14px 30px;
+  margin: 0 20px 28px;
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  box-shadow: 0 4px 18px rgba(180,130,210,.12);
+  font-weight: 700;
+  color: #9b6bb5;
+  font-size: .95rem;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.counter-badge {
+  background: linear-gradient(135deg, #d8a4f0, #b07ecb);
+  color: white;
+  font-size: 1.4rem;
+  font-weight: 900;
+  font-family: 'Fredoka One', cursive;
+  min-width: 64px;
+  height: 52px;
+  padding: 0 14px;
+  border-radius: 14px;
+  display: flex; align-items: center; justify-content: center;
+  box-shadow: 0 4px 14px rgba(180,100,220,.3);
+  gap: 4px;
+}
+
+/* ── BUSCADOR ── */
+.search-wrap {
+  width: 92%;
+  max-width: 560px;
+  margin-bottom: 24px;
+  position: relative;
+}
+
+.search-wrap input {
+  width: 100%;
+  background: white;
+  border: 2.5px solid #e8d0f5;
+  border-radius: 16px;
+  padding: 14px 20px 14px 48px;
+  font-family: 'Nunito', sans-serif;
+  font-size: .95rem;
+  font-weight: 700;
+  color: #5a3a70;
+  outline: none;
+  box-shadow: 0 4px 18px rgba(180,130,210,.1);
+  transition: border-color .2s, box-shadow .2s;
+}
+
+.search-wrap input:focus {
+  border-color: #c07ae0;
+  box-shadow: 0 0 0 3px rgba(192,122,224,.15);
+}
+
+.search-icon {
+  position: absolute;
+  left: 17px; top: 50%;
+  transform: translateY(-50%);
+  font-size: 1.1rem;
+  pointer-events: none;
+}
+
+.search-wrap input::placeholder { color: #c9a7de; font-weight: 600; }
+
+/* ── FILTROS ── */
+.filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  justify-content: center;
+  width: 92%;
+  max-width: 860px;
+  margin-bottom: 28px;
+}
+
+.filter-chip {
+  background: white;
+  border: 2px solid #e8d0f5;
+  border-radius: 30px;
+  padding: 7px 16px;
+  font-family: 'Nunito', sans-serif;
+  font-size: .8rem;
+  font-weight: 800;
+  color: #9b6bb5;
+  cursor: pointer;
+  transition: all .2s;
+  white-space: nowrap;
+}
+
+.filter-chip:hover { border-color: #b07ecb; color: #7a4a9a; }
+.filter-chip.active {
+  background: linear-gradient(135deg, #d8a4f0, #b07ecb);
+  border-color: transparent;
+  color: white;
+  box-shadow: 0 4px 14px rgba(180,100,220,.3);
+}
+
+/* ── GRID DE RAZONES ── */
+.reasons-grid {
+  width: 92%;
+  max-width: 1100px;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 16px;
+  padding-bottom: 70px;
+}
+
+/* ── CARD DE RAZÓN ── */
+.reason-card {
+  border-radius: 18px;
+  border: 3px solid;
+  background: white;
+  padding: 20px 18px 16px;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 4px 18px rgba(0,0,0,.07);
+  transition: transform .25s, box-shadow .25s;
+  cursor: default;
+  animation: popIn .35s cubic-bezier(.23,1,.32,1) both;
+}
+
+.reason-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 28px rgba(0,0,0,.12);
+}
+
+@keyframes popIn {
+  from { opacity:0; transform:scale(.9) translateY(10px); }
+  to   { opacity:1; transform:scale(1) translateY(0); }
+}
+
+/* Patrón fondo */
+.reason-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: var(--pat);
+  background-size: 48px 48px;
+  opacity: 1;
+  pointer-events: none;
+}
+
+.reason-number {
+  font-family: 'Fredoka One', cursive;
+  font-size: .8rem;
+  letter-spacing: .1em;
+  opacity: .5;
+  margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  position: relative;
+  z-index: 1;
+}
+
+.reason-emoji {
+  font-size: 1.3rem;
+  margin-bottom: 6px;
+  position: relative;
+  z-index: 1;
+  display: block;
+}
+
+.reason-text {
+  font-family: 'Fredoka One', cursive;
+  font-size: clamp(1rem, 2.5vw, 1.18rem);
+  line-height: 1.35;
+  position: relative;
+  z-index: 1;
+  letter-spacing: .01em;
+}
+
+.reason-category {
+  display: inline-block;
+  margin-top: 10px;
+  font-size: .65rem;
+  font-weight: 800;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  padding: 3px 10px;
+  border-radius: 20px;
+  background: rgba(255,255,255,.65);
+  border: 1.5px solid rgba(0,0,0,.08);
+  position: relative;
+  z-index: 1;
+  opacity: .7;
+}
+
+/* ── EMPTY ── */
+.empty-state {
+  text-align: center;
+  padding: 60px 20px;
+  color: #c09ad0;
+  font-size: 1rem;
+  font-weight: 700;
+  grid-column: 1/-1;
+}
+
+.empty-state .big-emoji { font-size: 3.5rem; display: block; margin-bottom: 14px; }
+
+/* ── FAB SCROLL TOP ── */
+.fab {
+  position: fixed;
+  bottom: 28px; right: 28px;
+  width: 50px; height: 50px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #d8a4f0, #b07ecb);
+  color: white;
+  border: none;
+  font-size: 1.3rem;
+  cursor: pointer;
+  box-shadow: 0 6px 20px rgba(180,100,220,.4);
+  display: flex; align-items: center; justify-content: center;
+  transition: all .3s;
+  opacity: 0; pointer-events: none;
+  z-index: 100;
+}
+
+.fab.visible { opacity: 1; pointer-events: all; }
+.fab:hover { transform: scale(1.1); }
+</style>
+</head>
+<body>
+
+<div class="page-header">
+  <div class="page-title">
+    RAZONES PARA AMARTE
+    <span>✦ ÑIÑIÑI ✦</span>
+  </div>
+  <div class="hearts-deco">❤️ ❤️ ❤️ ❤️</div>
+</div>
+
+<div class="global-counter">
+  <div class="counter-badge" id="visible-count">300</div>
+  <div>
+    <div style="font-size:1rem" id="counter-label">Razones para amarte</div>
+    <div style="font-size:.78rem;font-weight:600;color:#c09ad0">Y todavía me quedan más por descubrir 💕</div>
+  </div>
+</div>
+
+<div class="search-wrap">
+  <span class="search-icon">🔍</span>
+  <input type="text" id="search-input" placeholder="Busca una razón..." oninput="filterReasons()">
+</div>
+
+<div class="filters" id="filters"></div>
+
+<div class="reasons-grid" id="reasons-grid"></div>
+
+<button class="fab" id="fab" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+
+<script>
+const CATEGORIES = [
+  { id:'todo',    label:'♥️ Todas',      colors:null },
+  { id:'amor',    label:'❤️ Amor',       colors:{ bg:'#fde8e8', border:'#e8a0a0', text:'#7a3a3a', pat:'#e8a0a0' } },
+  { id:'fisico',  label:'✨ Lo físico',  colors:{ bg:'#fce4f0', border:'#e888c0', text:'#7a1855', pat:'#e888c0' } },
+  { id:'caracter',label:'🌟 Carácter',   colors:{ bg:'#f0e4f8', border:'#c9a5e0', text:'#5a3070', pat:'#c9a5e0' } },
+  { id:'momentos',label:'🎀 Momentos',   colors:{ bg:'#deeef9', border:'#90c3e8', text:'#1e4e78', pat:'#90c3e8' } },
+  { id:'detalles',label:'🌸 Detalles',   colors:{ bg:'#dff5e8', border:'#8ecfa8', text:'#1e5c38', pat:'#8ecfa8' } },
+  { id:'futuro',  label:'⭐ Futuro',     colors:{ bg:'#fdf5c8', border:'#e0c870', text:'#5a4a00', pat:'#e0c870' } },
+  { id:'gracioso',label:'😂 Gracioso',   colors:{ bg:'#fde8d0', border:'#f0b070', text:'#7a3800', pat:'#f0b070' } },
+];
+
+const PALETTE = [
+  { bg:'#fde8e8', border:'#e8a0a0', text:'#7a3a3a', pat:'#e8a0a0' },
+  { bg:'#f0e4f8', border:'#c9a5e0', text:'#5a3070', pat:'#c9a5e0' },
+  { bg:'#deeef9', border:'#90c3e8', text:'#1e4e78', pat:'#90c3e8' },
+  { bg:'#dff5e8', border:'#8ecfa8', text:'#1e5c38', pat:'#8ecfa8' },
+  { bg:'#fdf5c8', border:'#e0c870', text:'#5a4a00', pat:'#e0c870' },
+  { bg:'#fde8d0', border:'#f0b070', text:'#7a3800', pat:'#f0b070' },
+  { bg:'#fce4f0', border:'#e888c0', text:'#7a1855', pat:'#e888c0' },
+  { bg:'#d8f5ee', border:'#78d4bc', text:'#0e5c46', pat:'#78d4bc' },
+];
+
+const REASONS = [
+  // ── AMOR ──
+  { text:'Porque eres la persona que mi corazón eligió sin dudarlo', cat:'amor', emoji:'❤️' },
+  { text:'Porque me enamoré de ti sin darme cuenta y ya no quiero despertar', cat:'amor', emoji:'💕' },
+  { text:'Porque amarte se convirtió en mi cosa favorita del mundo', cat:'amor', emoji:'💖' },
+  { text:'Porque contigo aprendí lo que significa querer a alguien de verdad', cat:'amor', emoji:'💝' },
+  { text:'Porque mi amor por ti crece cada día que pasa', cat:'amor', emoji:'🌹' },
+  { text:'Porque eres todo lo que pedí cuando soñaba con alguien especial', cat:'amor', emoji:'✨' },
+  { text:'Porque te quiero más de lo que las palabras pueden decir', cat:'amor', emoji:'💫' },
+  { text:'Porque eres la razón por la que creo en el amor', cat:'amor', emoji:'❤️' },
+  { text:'Porque cuando te tengo cerca el mundo tiene más sentido', cat:'amor', emoji:'💗' },
+  { text:'Porque te elegiría mil veces si tuviera que volver a empezar', cat:'amor', emoji:'💞' },
+  { text:'Porque eres el tipo de persona de la que uno no se cansa de amar', cat:'amor', emoji:'🌸' },
+  { text:'Porque amar a alguien como tú es un privilegio que no merezco', cat:'amor', emoji:'💜' },
+  { text:'Porque me haces sentir que el amor es la cosa más bonita del universo', cat:'amor', emoji:'🦋' },
+  { text:'Porque eres mi favorita, siempre, sin importar nada más', cat:'amor', emoji:'⭐' },
+  { text:'Porque contigo descubrí que el amor puede ser tranquilo y bonito a la vez', cat:'amor', emoji:'🌙' },
+  { text:'Porque eres el hogar al que siempre quiero volver', cat:'amor', emoji:'🏠' },
+  { text:'Porque te amo aunque a veces no sé cómo decirlo bien', cat:'amor', emoji:'💌' },
+  { text:'Porque hay algo en tu forma de ser que me tiene completamente enamorado', cat:'amor', emoji:'😍' },
+  { text:'Porque eres la persona que más quiero en este mundo, así de simple', cat:'amor', emoji:'❤️' },
+  { text:'Porque cada vez que te veo me vuelvo a enamorar un poco más', cat:'amor', emoji:'💘' },
+
+  // ── LO FÍSICO ──
+  { text:'Porque tu sonrisa es lo más bonito que mis ojos han visto', cat:'fisico', emoji:'😊' },
+  { text:'Porque cuando te ríes de verdad el mundo se detiene', cat:'fisico', emoji:'😂' },
+  { text:'Porque tus ojos me dicen cosas que no necesitan palabras', cat:'fisico', emoji:'👀' },
+  { text:'Porque eres guapísima y ni siquiera lo sabes', cat:'fisico', emoji:'✨' },
+  { text:'Porque cuando me abrazas no quiero que me sueltes nunca', cat:'fisico', emoji:'🤗' },
+  { text:'Porque tu voz es lo que más me gusta escuchar en el día', cat:'fisico', emoji:'🎵' },
+  { text:'Porque me gustas con el cabello desordenado y sin arreglar', cat:'fisico', emoji:'💆' },
+  { text:'Porque tu risa contagia sin que puedas evitarlo', cat:'fisico', emoji:'😄' },
+  { text:'Porque cuando me miras de cierta manera me derrites por completo', cat:'fisico', emoji:'🥺' },
+  { text:'Porque tus manos pequeñas me encantan en todo momento', cat:'fisico', emoji:'🤝' },
+  { text:'Porque eres hermosa incluso cuando crees que no lo eres', cat:'fisico', emoji:'👑' },
+  { text:'Porque tu cara cuando algo te da ternura es lo más adorable del mundo', cat:'fisico', emoji:'🥰' },
+  { text:'Porque cada parte de ti me parece perfecta a mi manera', cat:'fisico', emoji:'💖' },
+  { text:'Porque tu forma de caminar tiene algo que siempre me llama la atención', cat:'fisico', emoji:'🦋' },
+  { text:'Porque el brillo de tus ojos cuando estás emocionada no tiene comparación', cat:'fisico', emoji:'⭐' },
+  { text:'Porque me encanta cómo te ves cuando acabas de despertar', cat:'fisico', emoji:'🌅' },
+  { text:'Porque tu expresión cuando algo te parece gracioso es mi favorita', cat:'fisico', emoji:'😆' },
+  { text:'Porque incluso en tus días más cansados sigues siendo preciosa', cat:'fisico', emoji:'💝' },
+  { text:'Porque la forma en que me miras me hace sentir el más afortunado', cat:'fisico', emoji:'😻' },
+  { text:'Porque me encanta tu cara cuando estás concentrada en algo', cat:'fisico', emoji:'🤓' },
+
+  // ── CARÁCTER ──
+  { text:'Porque eres más fuerte de lo que crees y más valiente de lo que admites', cat:'caracter', emoji:'💪' },
+  { text:'Porque tienes un corazón enorme aunque lo escondes a veces', cat:'caracter', emoji:'💝' },
+  { text:'Porque eres inteligente de una manera que me impresiona siempre', cat:'caracter', emoji:'🧠' },
+  { text:'Porque cuando decides algo lo haces con todo y no a medias', cat:'caracter', emoji:'🔥' },
+  { text:'Porque eres honesta aunque a veces cueste decir la verdad', cat:'caracter', emoji:'✅' },
+  { text:'Porque tu forma de cuidar a las personas que quieres es única', cat:'caracter', emoji:'🤍' },
+  { text:'Porque tienes una personalidad que no se parece a ninguna otra', cat:'caracter', emoji:'🌟' },
+  { text:'Porque te preocupas por los demás de una manera que pocos hacen', cat:'caracter', emoji:'💞' },
+  { text:'Porque eres empática y eso es más raro de lo que la gente cree', cat:'caracter', emoji:'🫂' },
+  { text:'Porque aunque te da miedo, siempre sigues adelante', cat:'caracter', emoji:'🦁' },
+  { text:'Porque tienes criterio y no te dejas llevar por lo que dicen los demás', cat:'caracter', emoji:'🎯' },
+  { text:'Porque eres apasionada con lo que te importa y eso se nota', cat:'caracter', emoji:'🔥' },
+  { text:'Porque tu sensibilidad no es debilidad, es una de tus cosas más bonitas', cat:'caracter', emoji:'🌸' },
+  { text:'Porque cuando alguien te necesita apareces sin que te lo pidan', cat:'caracter', emoji:'🤗' },
+  { text:'Porque tienes una manera de ver la vida que me enseña cosas nuevas', cat:'caracter', emoji:'👁️' },
+  { text:'Porque eres leal con las personas que quieres de verdad', cat:'caracter', emoji:'🛡️' },
+  { text:'Porque tu determinación cuando algo te importa no tiene frenos', cat:'caracter', emoji:'🚀' },
+  { text:'Porque eres auténtica y no finges ser alguien que no eres', cat:'caracter', emoji:'💫' },
+  { text:'Porque tienes una mente que nunca para de pensar en cosas interesantes', cat:'caracter', emoji:'💭' },
+  { text:'Porque la forma en que amas a las personas que son tuyas es inmenso', cat:'caracter', emoji:'❤️' },
+  { text:'Porque eres resiliente aunque no te hayas dado cuenta todavía', cat:'caracter', emoji:'🌱' },
+  { text:'Porque tienes valores y eso hoy en día vale muchísimo', cat:'caracter', emoji:'⭐' },
+  { text:'Porque eres detallista de una manera que me sorprende constantemente', cat:'caracter', emoji:'🎀' },
+  { text:'Porque tu intuición casi siempre tiene razón aunque no lo admitas', cat:'caracter', emoji:'🔮' },
+  { text:'Porque eres generosa con tu tiempo, tu energía y tu amor', cat:'caracter', emoji:'🎁' },
+
+  // ── MOMENTOS ──
+  { text:'Porque las conversaciones contigo de noche son las que más recuerdo', cat:'momentos', emoji:'🌙' },
+  { text:'Porque los silencios contigo no son incómodos, son cómodos y bonitos', cat:'momentos', emoji:'🤫' },
+  { text:'Porque cada vez que estamos juntos creo que el tiempo se va demasiado rápido', cat:'momentos', emoji:'⏳' },
+  { text:'Porque incluso en los días aburridos contigo se vuelven especiales', cat:'momentos', emoji:'✨' },
+  { text:'Porque esos momentos en los que nos reímos de nada valen todo', cat:'momentos', emoji:'😂' },
+  { text:'Porque cuando estás cerca todo lo demás deja de importar', cat:'momentos', emoji:'💕' },
+  { text:'Porque los planes contigo siempre terminan siendo mejores de lo esperado', cat:'momentos', emoji:'🎉' },
+  { text:'Porque hay ciertos momentos nuestros que guardo como tesoros', cat:'momentos', emoji:'💎' },
+  { text:'Porque me encanta cuando nos quedamos hablando hasta tarde sin darnos cuenta', cat:'momentos', emoji:'🌃' },
+  { text:'Porque cualquier lugar se vuelve mejor si estás tú ahí', cat:'momentos', emoji:'🗺️' },
+  { text:'Porque los abrazos que me das cuando más los necesito me salvan el día', cat:'momentos', emoji:'🤗' },
+  { text:'Porque me gusta cómo se siente estar contigo aunque no hagamos nada especial', cat:'momentos', emoji:'🛋️' },
+  { text:'Porque cuando estás emocionada por algo contagias esa energía a todos', cat:'momentos', emoji:'⚡' },
+  { text:'Porque hay risas nuestras que ya son parte de mi historia favorita', cat:'momentos', emoji:'😄' },
+  { text:'Porque los momentos tranquilos contigo son igual de perfectos que los emocionantes', cat:'momentos', emoji:'🌅' },
+  { text:'Porque me acuerdo de los detalles pequeños de nuestros momentos juntos', cat:'momentos', emoji:'📸' },
+  { text:'Porque hay una versión de mí que solo existe cuando estoy contigo', cat:'momentos', emoji:'🪞' },
+  { text:'Porque los planes de último momento contigo siempre resultan ser los mejores', cat:'momentos', emoji:'🎊' },
+  { text:'Porque me encanta cuando te emociona algo y no puedes ocultarlo', cat:'momentos', emoji:'🥳' },
+  { text:'Porque cualquier aventura contigo es la que más quiero vivir', cat:'momentos', emoji:'🗺️' },
+
+  // ── DETALLES ──
+  { text:'Porque recuerdas cosas de mí que ni yo recuerdo de mí mismo', cat:'detalles', emoji:'🎯' },
+  { text:'Porque los mensajes que me mandas en momentos inesperados me alegran el día', cat:'detalles', emoji:'💌' },
+  { text:'Porque te preocupas por saber cómo estoy de verdad, no de mentira', cat:'detalles', emoji:'🤍' },
+  { text:'Porque tus detalles pequeños valen más que los grandes de otros', cat:'detalles', emoji:'🌸' },
+  { text:'Porque me conoces mejor de lo que yo mismo me conozco a veces', cat:'detalles', emoji:'🧩' },
+  { text:'Porque cuando algo me pasa mal, tú lo notas sin que diga nada', cat:'detalles', emoji:'👁️' },
+  { text:'Porque te acuerdas de mis cosas favoritas y las usas para sorprenderme', cat:'detalles', emoji:'🎁' },
+  { text:'Porque cuando me cuidas lo haces de una manera que nadie más lo hace', cat:'detalles', emoji:'💞' },
+  { text:'Porque los detalles que tienes conmigo me demuestran cuánto te importo', cat:'detalles', emoji:'💕' },
+  { text:'Porque cuando me escuchas de verdad me hace sentir que importo', cat:'detalles', emoji:'👂' },
+  { text:'Porque te fijas en cosas de mí que nadie más nota', cat:'detalles', emoji:'✨' },
+  { text:'Porque cuando preguntas cómo estoy, esperas de verdad la respuesta', cat:'detalles', emoji:'💬' },
+  { text:'Porque los pequeños gestos tuyos me dicen más que mil palabras', cat:'detalles', emoji:'🎀' },
+  { text:'Porque te acuerdas de lo que me gusta y de lo que no y lo respetas', cat:'detalles', emoji:'📝' },
+  { text:'Porque cuando algo te recuerda a mí me lo dices y eso me encanta', cat:'detalles', emoji:'🔔' },
+  { text:'Porque apoyas mis cosas aunque a veces no las entiendas del todo', cat:'detalles', emoji:'🙌' },
+  { text:'Porque cuando celebras mis logros lo haces con más emoción que yo', cat:'detalles', emoji:'🎉' },
+  { text:'Porque me das espacio cuando lo necesito sin que tenga que pedirlo', cat:'detalles', emoji:'🌱' },
+  { text:'Porque me das palabras de aliento justo cuando más las necesito', cat:'detalles', emoji:'💪' },
+  { text:'Porque te preocupas por mi bienestar de formas que ni me doy cuenta', cat:'detalles', emoji:'🤍' },
+
+  // ── FUTURO ──
+  { text:'Porque me imagino un futuro contigo y se ve increíble', cat:'futuro', emoji:'🌟' },
+  { text:'Porque quiero que todo lo bueno que venga en mi vida lo vivas conmigo', cat:'futuro', emoji:'🛤️' },
+  { text:'Porque sé que contigo cualquier proyecto se vuelve más bonito', cat:'futuro', emoji:'🏗️' },
+  { text:'Porque me emociona pensar en lo que podemos construir juntos', cat:'futuro', emoji:'🏠' },
+  { text:'Porque eres el tipo de persona con quien quiero envejecer', cat:'futuro', emoji:'👴👵' },
+  { text:'Porque quiero que sigas siendo mi favorita por mucho tiempo más', cat:'futuro', emoji:'💍' },
+  { text:'Porque los sueños que tengo ahora te incluyen a ti', cat:'futuro', emoji:'💭' },
+  { text:'Porque me ilusiona pensar en todos los momentos que nos faltan vivir', cat:'futuro', emoji:'📆' },
+  { text:'Porque quiero seguir descubriendo cosas nuevas de ti todo el tiempo', cat:'futuro', emoji:'🔍' },
+  { text:'Porque el futuro se ve mejor cuando pienso que estarás en él', cat:'futuro', emoji:'🌈' },
+  { text:'Porque me emociona la idea de vivir aventuras que todavía no hemos imaginado', cat:'futuro', emoji:'🗺️' },
+  { text:'Porque quiero ser parte de tus historias por mucho tiempo más', cat:'futuro', emoji:'📖' },
+  { text:'Porque me imagino riéndome contigo de cosas que aún no han pasado', cat:'futuro', emoji:'😄' },
+  { text:'Porque quiero estar ahí cuando logres todo lo que te mereces', cat:'futuro', emoji:'🏆' },
+  { text:'Porque me emociona pensar en los recuerdos que todavía vamos a crear', cat:'futuro', emoji:'📷' },
+
+  // ── GRACIOSO ──
+  { text:'Porque eres graciosa sin proponértelo y eso lo hace mejor todavía', cat:'gracioso', emoji:'😂' },
+  { text:'Porque cuando intentas explicar algo con señas y no funciona es adorable', cat:'gracioso', emoji:'🤦' },
+  { text:'Porque tu cara de enojada da más ternura que miedo, la verdad', cat:'gracioso', emoji:'😤' },
+  { text:'Porque cuando te ríes de algo tuyo también te da risa y eso me encanta', cat:'gracioso', emoji:'😆' },
+  { text:'Porque tus reacciones exageradas ante cosas pequeñas me hacen el día', cat:'gracioso', emoji:'😱' },
+  { text:'Porque cuando intentas hacer algo seria y te da risa igual es perfecta', cat:'gracioso', emoji:'🤭' },
+  { text:'Porque tus opiniones sobre cosas tontas son sorprendentemente convincentes', cat:'gracioso', emoji:'🧐' },
+  { text:'Porque cuando algo te parece muy gracioso no puedes parar de reírte y eso es contagioso', cat:'gracioso', emoji:'🤣' },
+  { text:'Porque tu dramática versión de contar historias me divierte siempre', cat:'gracioso', emoji:'🎭' },
+  { text:'Porque a veces dices las cosas más honestas sin filtro y son perfectas', cat:'gracioso', emoji:'💬' },
+  { text:'Porque cuando pierdes en algo te pones muy competitiva y no lo admites', cat:'gracioso', emoji:'🎮' },
+  { text:'Porque tus gustos raros son parte de lo que te hace tan especial', cat:'gracioso', emoji:'🦄' },
+  { text:'Porque cuando algo no te sale bien tu reacción es mi favorita del mundo', cat:'gracioso', emoji:'😅' },
+
+  // ── MÁS AMOR (para llegar a 300+) ──
+  { text:'Porque me enseñas algo nuevo cada vez que hablamos', cat:'amor', emoji:'📚' },
+  { text:'Porque me haces querer ser mejor persona sin pedirlo', cat:'amor', emoji:'🌱' },
+  { text:'Porque soy más yo mismo cuando estoy contigo', cat:'amor', emoji:'🪞' },
+  { text:'Porque eres mi persona favorita para contarle las cosas', cat:'amor', emoji:'💬' },
+  { text:'Porque cuando algo está mal, pensar en ti lo hace un poco mejor', cat:'amor', emoji:'🌈' },
+  { text:'Porque me da tranquilidad saber que estás en mi vida', cat:'amor', emoji:'☁️' },
+  { text:'Porque contigo el tiempo pasa diferente, mejor', cat:'amor', emoji:'⏰' },
+  { text:'Porque extrañarte me recuerda cuánto me importas', cat:'amor', emoji:'💭' },
+  { text:'Porque eres mi primera persona a la que quiero contarle lo que me pasa', cat:'amor', emoji:'📞' },
+  { text:'Porque me gustas en todos tus modos, no solo en los perfectos', cat:'amor', emoji:'🌟' },
+  { text:'Porque aun cuando las cosas están difíciles, estás', cat:'amor', emoji:'🤝' },
+  { text:'Porque eres constante de una manera que no es común', cat:'amor', emoji:'💫' },
+  { text:'Porque me haces sentir que no tengo que fingir nada contigo', cat:'amor', emoji:'😌' },
+  { text:'Porque confiar en ti se siente natural y eso no es fácil de encontrar', cat:'amor', emoji:'🔐' },
+  { text:'Porque eres la persona con quien más quiero compartir lo que me da alegría', cat:'amor', emoji:'🎉' },
+  { text:'Porque me importas más de lo que sé expresar la mayoría de las veces', cat:'amor', emoji:'❤️' },
+  { text:'Porque elegiste estar aunque no estabas obligada y eso significa todo', cat:'amor', emoji:'💝' },
+  { text:'Porque el amor que me das es del tipo que uno no olvida', cat:'amor', emoji:'💞' },
+  { text:'Porque siempre encuentras la forma de hacerme sentir bien', cat:'amor', emoji:'🌸' },
+  { text:'Porque cuando me hablas de lo que te emociona también a mí me emociona', cat:'amor', emoji:'⚡' },
+
+  { text:'Porque tu energía cambia la vibra de cualquier lugar en el que entras', cat:'caracter', emoji:'✨' },
+  { text:'Porque eres capaz de encontrar algo bueno en situaciones difíciles', cat:'caracter', emoji:'🌈' },
+  { text:'Porque no te quedas callada cuando algo no está bien y eso te admiro', cat:'caracter', emoji:'🗣️' },
+  { text:'Porque tienes una creatividad que me sorprende constantemente', cat:'caracter', emoji:'🎨' },
+  { text:'Porque sabes escuchar de una manera que pocos saben hacerlo', cat:'caracter', emoji:'👂' },
+  { text:'Porque eres curiosa y eso hace que siempre tengas algo interesante que decir', cat:'caracter', emoji:'🔭' },
+  { text:'Porque cuando amas algo lo amas con todo, nunca a medias', cat:'caracter', emoji:'💖' },
+  { text:'Porque tienes sentido del humor que a veces me toma por sorpresa', cat:'caracter', emoji:'😄' },
+  { text:'Porque eres más lista de lo que das crédito', cat:'caracter', emoji:'🧠' },
+  { text:'Porque te importa hacer las cosas bien y eso se nota en todo', cat:'caracter', emoji:'⭐' },
+  { text:'Porque eres de las personas que hacen lo que dicen que van a hacer', cat:'caracter', emoji:'✅' },
+  { text:'Porque tienes una manera de calmarme que no tiene explicación', cat:'caracter', emoji:'🕊️' },
+  { text:'Porque eres real y eso en un mundo de máscaras vale doble', cat:'caracter', emoji:'💎' },
+  { text:'Porque no le tienes miedo a los sentimientos aunque a veces duela', cat:'caracter', emoji:'🌊' },
+  { text:'Porque tu corazón es más grande de lo que tú misma crees', cat:'caracter', emoji:'💗' },
+
+  { text:'Porque el primer mensaje del día de tu parte es algo que espero', cat:'detalles', emoji:'📱' },
+  { text:'Porque cuando preguntas si comí me hace sentir cuidado de verdad', cat:'detalles', emoji:'🍽️' },
+  { text:'Porque te fijas en cosas mías que ni yo me había dado cuenta', cat:'detalles', emoji:'🔍' },
+  { text:'Porque cuando algo te recuerda a mí y me lo dices me alegra el día', cat:'detalles', emoji:'💌' },
+  { text:'Porque me defiendes aunque no esté presente y eso lo valoro mucho', cat:'detalles', emoji:'🛡️' },
+  { text:'Porque celebras mis cosas pequeñas como si fueran grandes', cat:'detalles', emoji:'🎊' },
+  { text:'Porque cuando estoy raro lo notas antes de que yo lo diga', cat:'detalles', emoji:'👁️' },
+  { text:'Porque me das el tipo de apoyo que necesito, no el que tú querrías', cat:'detalles', emoji:'🤍' },
+  { text:'Porque respetas mis tiempos aunque a veces sea difícil', cat:'detalles', emoji:'⏳' },
+  { text:'Porque cuando me cuentas algo personal sé que confías en mí', cat:'detalles', emoji:'🔐' },
+
+  { text:'Porque me imagino viajando por el mundo contigo', cat:'futuro', emoji:'✈️' },
+  { text:'Porque hay canciones que ya son nuestras y siempre lo serán', cat:'momentos', emoji:'🎵' },
+  { text:'Porque hay lugares que ahora me recuerdan a ti para siempre', cat:'momentos', emoji:'📍' },
+  { text:'Porque tengo fotos tuyas que no borraría ni aunque me lo pidieran', cat:'momentos', emoji:'📸' },
+  { text:'Porque los planes más simples contigo se convierten en recuerdos bonitos', cat:'momentos', emoji:'🌻' },
+  { text:'Porque me gusta cómo cambia tu cara cuando algo te emociona de verdad', cat:'fisico', emoji:'😍' },
+  { text:'Porque tu manera de gesticular cuando hablas me fascina', cat:'fisico', emoji:'🤲' },
+  { text:'Porque me encanta cómo suenas cuando estás muy emocionada con algo', cat:'fisico', emoji:'🎶' },
+  { text:'Porque tus ojos tienen una expresión diferente cuando estás feliz de verdad', cat:'fisico', emoji:'👀' },
+  { text:'Porque tienes una energía que se siente aunque no la vea', cat:'fisico', emoji:'⚡' },
+
+  { text:'Porque me haces querer ser alguien de quien puedas estar orgullosa', cat:'amor', emoji:'🏆' },
+  { text:'Porque contigo aprendí que el amor también puede ser paz', cat:'amor', emoji:'🕊️' },
+  { text:'Porque eres la razón por la que algunos días se vuelven buenos', cat:'amor', emoji:'☀️' },
+  { text:'Porque me gustas demasiado y no siempre sé cómo decirlo bien', cat:'amor', emoji:'😶' },
+  { text:'Porque cuando pienso en lo que más quiero en la vida, apareces tú', cat:'amor', emoji:'💭' },
+  { text:'Porque te mereces todo lo bueno que pueda darte y más', cat:'amor', emoji:'🎁' },
+  { text:'Porque me alegra que existas, de verdad', cat:'amor', emoji:'🌟' },
+  { text:'Porque eres mi cosa favorita de este mundo', cat:'amor', emoji:'❤️' },
+  { text:'Porque te amo hoy, mañana y todos los días que vengan', cat:'amor', emoji:'💕' },
+  { text:'Porque simplemente eres tú, y eso es suficiente para amarte', cat:'amor', emoji:'💝' },
+
+  // ── 80 RAZONES MÁS para llegar sólido a 300 ──
+  { text:'Porque cuando te equivocas lo admites y eso es muy valioso', cat:'caracter', emoji:'🙏' },
+  { text:'Porque te importa el bienestar de las personas que te rodean', cat:'caracter', emoji:'💚' },
+  { text:'Porque no guardas rencor fácilmente aunque tengas razón de sobra', cat:'caracter', emoji:'🕊️' },
+  { text:'Porque eres capaz de reírte de ti misma y eso te hace más libre', cat:'caracter', emoji:'😄' },
+  { text:'Porque le das valor a las cosas que realmente lo merecen', cat:'caracter', emoji:'⚖️' },
+  { text:'Porque eres comprometida cuando algo o alguien te importa', cat:'caracter', emoji:'💪' },
+  { text:'Porque no finges estar bien cuando no lo estás y eso requiere valentía', cat:'caracter', emoji:'🌊' },
+  { text:'Porque eres protectora con las personas que amas', cat:'caracter', emoji:'🛡️' },
+  { text:'Porque tu sentido de justicia es algo que admiro en ti', cat:'caracter', emoji:'⚖️' },
+  { text:'Porque eres capaz de sentir y eso te hace más humana y más bonita', cat:'caracter', emoji:'💗' },
+  { text:'Porque tienes gustos únicos que te hacen diferente a todas', cat:'caracter', emoji:'🦋' },
+  { text:'Porque amas profundamente y sin condiciones a los que son tuyos', cat:'caracter', emoji:'❤️' },
+  { text:'Porque eres alguien en quien se puede confiar con cosas importantes', cat:'caracter', emoji:'🔐' },
+  { text:'Porque no necesitas la aprobación de todos para saber lo que vales', cat:'caracter', emoji:'👑' },
+  { text:'Porque eres el tipo de persona que hace mejor a los que la rodean', cat:'caracter', emoji:'🌟' },
+
+  { text:'Porque me encanta cuando me mandas algo que te recordó a mí', cat:'detalles', emoji:'💬' },
+  { text:'Porque me preguntas cómo me fue cuando sabes que tuve un día difícil', cat:'detalles', emoji:'❓' },
+  { text:'Porque te esfuerzas en hacer que me sienta especial y se nota', cat:'detalles', emoji:'✨' },
+  { text:'Porque me escuchas aunque el tema no sea de tu interés', cat:'detalles', emoji:'👂' },
+  { text:'Porque siempre tienes palabras para hacerme sentir mejor', cat:'detalles', emoji:'💌' },
+  { text:'Porque recuerdas fechas y cosas importantes para mí', cat:'detalles', emoji:'📅' },
+  { text:'Porque cuando algo sale mal buscas soluciones, no culpables', cat:'detalles', emoji:'🔧' },
+  { text:'Porque me tratas con cariño incluso cuando estoy de mal humor', cat:'detalles', emoji:'🤍' },
+  { text:'Porque me das confianza para contarte cosas que no cuento a nadie', cat:'detalles', emoji:'🔑' },
+  { text:'Porque tu manera de cuidarme es genuina y no forzada', cat:'detalles', emoji:'🌸' },
+
+  { text:'Porque quiero que seas la primera persona en saber mis buenas noticias', cat:'futuro', emoji:'📢' },
+  { text:'Porque me imagino haciendo cosas cotidianas contigo y me emociona', cat:'futuro', emoji:'🏠' },
+  { text:'Porque quiero que seas parte de mis momentos más importantes', cat:'futuro', emoji:'🎓' },
+  { text:'Porque me veo creciendo contigo de una manera que se siente bien', cat:'futuro', emoji:'🌱' },
+  { text:'Porque hay metas que me dan más ganas de lograr sabiendo que estás', cat:'futuro', emoji:'🎯' },
+  { text:'Porque quiero celebrar contigo cosas que todavía no han pasado', cat:'futuro', emoji:'🥂' },
+  { text:'Porque me imagino riéndome contigo de historias que todavía no vivimos', cat:'futuro', emoji:'😂' },
+  { text:'Porque el futuro se ve más bonito si está lleno de ti', cat:'futuro', emoji:'🌈' },
+  { text:'Porque quiero seguir siendo la persona a quien le cuentes todo', cat:'futuro', emoji:'💬' },
+  { text:'Porque me emociona pensar en todo lo que todavía vamos a descubrir', cat:'futuro', emoji:'🗺️' },
+
+  { text:'Porque cuando escuchas música que te gusta y te mueves sin darte cuenta es adorable', cat:'gracioso', emoji:'🎶' },
+  { text:'Porque cuando algo no te sale y lo vuelves a intentar con la misma energía me encanta', cat:'gracioso', emoji:'😤' },
+  { text:'Porque tus comentarios internos sobre las cosas son a veces más divertidos que cualquier comedia', cat:'gracioso', emoji:'💭' },
+  { text:'Porque cuando te dan ganas de reír en un momento serio lo intentas aguantar y fallas', cat:'gracioso', emoji:'🤣' },
+  { text:'Porque tu cara cuando algo te parece injusto dice todo sin abrir la boca', cat:'gracioso', emoji:'😤' },
+  { text:'Porque cuando algo te da asco tu reacción exagerada me alegra el día', cat:'gracioso', emoji:'🤢' },
+  { text:'Porque defiendes tus opiniones raras con una convicción admirable', cat:'gracioso', emoji:'🎤' },
+
+  { text:'Porque hay algo en tu presencia que hace que todo sea más llevadero', cat:'amor', emoji:'☀️' },
+  { text:'Porque me alegra saber que al final del día puedo contarte cómo me fue', cat:'amor', emoji:'🌙' },
+  { text:'Porque me haces sentir que no estoy solo aunque estemos lejos', cat:'amor', emoji:'📡' },
+  { text:'Porque cada día que pasa me gustas más y eso no me esperaba', cat:'amor', emoji:'📈' },
+  { text:'Porque amarte se siente como algo que debí hacer siempre', cat:'amor', emoji:'⏰' },
+  { text:'Porque eres mi calma cuando todo está revuelto', cat:'amor', emoji:'🌊' },
+  { text:'Porque me enorgullezco de poder decir que eres mía', cat:'amor', emoji:'🏆' },
+  { text:'Porque le das color a mis días grises sin darte cuenta', cat:'amor', emoji:'🎨' },
+  { text:'Porque eres mi persona favorita para compartir lo que me pone feliz', cat:'amor', emoji:'😊' },
+  { text:'Porque si tuviera que elegir de nuevo, te elegiría exactamente igual', cat:'amor', emoji:'💘' },
+
+  { text:'Porque tus buenos días me ponen de buen humor automáticamente', cat:'detalles', emoji:'🌅' },
+  { text:'Porque cuando te cuento algo, te importa de verdad', cat:'detalles', emoji:'💗' },
+  { text:'Porque eres la persona con quien más quiero hacer cosas nuevas', cat:'momentos', emoji:'🎢' },
+  { text:'Porque me acuerdo de la primera vez que me hiciste reír de verdad', cat:'momentos', emoji:'😂' },
+  { text:'Porque hay momentos nuestros que no cambiaría por nada', cat:'momentos', emoji:'💎' },
+  { text:'Porque cuando estamos juntos el tiempo siempre se va demasiado rápido', cat:'momentos', emoji:'⏩' },
+  { text:'Porque incluso en los días ordinarios, contigo todo es más bonito', cat:'momentos', emoji:'🌸' },
+  { text:'Porque tus abrazos tienen un tipo de magia que no sé explicar', cat:'fisico', emoji:'🤗' },
+  { text:'Porque cuando te emocionas por algo tus ojos brillan diferente', cat:'fisico', emoji:'✨' },
+  { text:'Porque me gusta cómo hueles y no lo digo suficiente', cat:'fisico', emoji:'🌺' },
+  { text:'Porque tu voz tiene un tono especial cuando estás contenta y lo reconozco', cat:'fisico', emoji:'🎵' },
+  { text:'Porque tu sonrisa cuando es de verdad es diferente a todas las demás', cat:'fisico', emoji:'😊' },
+  { text:'Porque me encanta la cara que pones cuando escuchas algo que te sorprende', cat:'fisico', emoji:'😯' },
+
+  { text:'Porque eres exactamente el tipo de persona que quería en mi vida', cat:'amor', emoji:'🎯' },
+  { text:'Porque lo que siento por ti es el tipo de amor del que no quiero curarme', cat:'amor', emoji:'💉' },
+  { text:'Porque eres mi favorita, hoy, mañana y siempre', cat:'amor', emoji:'⭐' },
+  { text:'Porque gracias a ti sé lo que es querer con todo', cat:'amor', emoji:'❤️' },
+  { text:'Porque eres más de lo que pedí y exactamente lo que necesitaba', cat:'amor', emoji:'🎁' },
+  { text:'Porque te amo, así de simple y así de enorme', cat:'amor', emoji:'💝' },
+];
+
+let currentFilter = 'todo';
+let currentSearch = '';
+
+function init() {
+  // Render filtros
+  const filtersEl = document.getElementById('filters');
+  CATEGORIES.forEach(cat => {
+    const chip = document.createElement('div');
+    chip.className = 'filter-chip' + (cat.id === 'todo' ? ' active' : '');
+    chip.textContent = cat.label;
+    chip.onclick = () => {
+      currentFilter = cat.id;
+      document.querySelectorAll('.filter-chip').forEach(c => c.classList.remove('active'));
+      chip.classList.add('active');
+      filterReasons();
+    };
+    filtersEl.appendChild(chip);
+  });
+
+  renderReasons();
+
+  // FAB
+  window.addEventListener('scroll', () => {
+    document.getElementById('fab').classList.toggle('visible', window.scrollY > 400);
+  });
+}
+
+function filterReasons() {
+  currentSearch = document.getElementById('search-input').value.toLowerCase();
+  renderReasons();
+}
+
+function renderReasons() {
+  const grid = document.getElementById('reasons-grid');
+  grid.innerHTML = '';
+
+  const filtered = REASONS.filter(r => {
+    const matchCat = currentFilter === 'todo' || r.cat === currentFilter;
+    const matchSearch = !currentSearch || r.text.toLowerCase().includes(currentSearch);
+    return matchCat && matchSearch;
+  });
+
+  // Actualizar contador
+  const countEl = document.getElementById('visible-count');
+  const labelEl = document.getElementById('counter-label');
+  countEl.textContent = filtered.length;
+  labelEl.textContent = filtered.length === REASONS.length
+    ? 'Razones para amarte'
+    : `Razones encontradas`;
+
+  if (!filtered.length) {
+    grid.innerHTML = `<div class="empty-state"><span class="big-emoji">🔍</span>No encontré razones con esa búsqueda.<br>¡Pero igual te amo mucho!</div>`;
+    return;
+  }
+
+  filtered.forEach((r, i) => {
+    const cat = CATEGORIES.find(c => c.id === r.cat);
+    const col = cat?.colors || PALETTE[i % PALETTE.length];
+    const patSvg = `data:image/svg+xml,${encodeURIComponent(`<svg xmlns="http://www.w3.org/2000/svg" width="48" height="48"><text x="6" y="20" font-size="13" fill="${col.pat}" opacity="0.3">♥</text><text x="26" y="40" font-size="9" fill="${col.pat}" opacity="0.2">✉</text><text x="30" y="16" font-size="8" fill="${col.pat}" opacity="0.18">♥</text></svg>`)}`;
+
+    const globalIdx = REASONS.indexOf(r) + 1;
+
+    const card = document.createElement('div');
+    card.className = 'reason-card';
+    card.style.cssText = `
+      border-color: ${col.border};
+      background: ${col.bg};
+      --pat: url('${patSvg}');
+      animation-delay: ${Math.min(i * 0.03, 0.5)}s;
+    `;
+    card.innerHTML = `
+      <div class="reason-number" style="color:${col.text};">
+        ${r.emoji} Razón #${globalIdx}
+      </div>
+      <div class="reason-text" style="color:${col.text};">${r.text}</div>
+      <div class="reason-category" style="color:${col.text}; border-color:${col.border}60;">
+        ${CATEGORIES.find(c=>c.id===r.cat)?.label || ''}
+      </div>
+    `;
+    grid.appendChild(card);
+  });
+}
+
+init();
+</script>
+</body>
+</html>
