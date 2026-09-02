@@ -16,7 +16,7 @@ Una aplicación web completa y autocontenida para parejas, diseñada para funcio
 ## 🛠️ Stack Tecnológico
 
 ### Backend
-- Node.js + Express.js
+- Node.js 18+ + Express.js
 - PostgreSQL / SQLite
 - Prisma ORM
 - JWT Authentication
@@ -31,14 +31,95 @@ Una aplicación web completa y autocontenida para parejas, diseñada para funcio
 - Zustand + React Query
 - React Hook Form + Zod
 
-## 🚀 Instalación Rápida
+---
 
-### Prerrequisitos
-- Node.js 18+
-- Docker y Docker Compose (opcional)
-- npm o yarn
+## 🍎 Instalación en macOS
 
-### Opción 1: Docker (Recomendado)
+### Prerrequisitos para macOS
+
+Antes de comenzar, asegúrate de tener instaladas las siguientes herramientas en tu Mac:
+
+#### 1. Instalar Homebrew (si no lo tienes)
+```bash
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+```
+
+#### 2. Instalar Node.js 18+
+```bash
+brew install node@18
+```
+
+#### 3. Instalar Docker Desktop para Mac (Opción Recomendada)
+- Descarga desde: [https://www.docker.com/products/docker-desktop/](https://www.docker.com/products/docker-desktop/)
+- O usa Homebrew:
+```bash
+brew install --cask docker
+```
+
+#### 4. Alternativa: PostgreSQL nativo (para instalación manual)
+```bash
+brew install postgresql
+brew services start postgresql
+```
+
+#### 5. Verificar instalaciones
+```bash
+node --version    # Debe mostrar v18.x.x o superior
+npm --version     # Debe mostrar 9.x.x o superior
+docker --version  # Si usas Docker
+```
+
+---
+
+## 🚀 Métodos de Instalación
+
+### Opción 1: Docker (Recomendado para macOS) ⭐
+
+Esta es la forma más fácil y rápida de ejecutar la aplicación en tu Mac.
+
+```bash
+# 1. Clonar el repositorio
+git clone https://github.com/tu-usuario/nuestro-espacio.git
+cd nuestro-espacio
+
+# 2. Copiar variables de entorno
+cp .env.example .env
+
+# 3. Asegurar permisos correctos en macOS
+chmod +x scripts/*.sh
+
+# 4. Iniciar con Docker Compose
+docker-compose up -d
+
+# 5. Ver logs (opcional)
+docker-compose logs -f
+
+# La aplicación estará disponible en http://localhost:3000
+# El backend API en http://localhost:5000
+```
+
+**Detener la aplicación:**
+```bash
+docker-compose down
+```
+
+**Reiniciar:**
+```bash
+docker-compose restart
+```
+
+**Ver estado:**
+```bash
+docker-compose ps
+```
+
+---
+
+### Opción 2: Instalación Manual Nativa en macOS
+
+Si prefieres correr todo nativamente en tu Mac sin Docker:
+
+#### Paso 1: Preparar el entorno
 
 ```bash
 # Clonar el repositorio
@@ -47,35 +128,92 @@ cd nuestro-espacio
 
 # Copiar variables de entorno
 cp .env.example .env
-
-# Iniciar con Docker Compose
-docker-compose up -d
-
-# La aplicación estará disponible en http://localhost:3000
 ```
 
-### Opción 2: Instalación Manual
+#### Paso 2: Configurar Base de Datos
 
+**Opción A: Usando SQLite (Más simple, recomendado para desarrollo)**
+
+Editar `.env` y cambiar:
+```env
+DATABASE_URL="file:./dev.db"
+```
+
+Luego ejecutar:
 ```bash
-# Instalar dependencias del backend
 cd backend
-npm install
-
-# Configurar base de datos
-cp .env.example .env
 npx prisma migrate dev
 npx prisma db seed
+```
 
-# Iniciar servidor backend
-npm run dev
+**Opción B: Usando PostgreSQL nativo**
 
-# En otra terminal, instalar dependencias del frontend
-cd frontend
+```bash
+# Crear base de datos
+createdb nuestro_espacio
+
+# Actualizar .env con:
+# DATABASE_URL="postgresql://$(whoami)@localhost:5432/nuestro_espacio"
+
+cd backend
+npx prisma migrate dev
+npx prisma db seed
+```
+
+#### Paso 3: Instalar y ejecutar Backend
+
+```bash
+cd backend
+
+# Instalar dependencias
 npm install
 
-# Iniciar frontend
+# Crear directorios necesarios
+mkdir -p uploads/photos/{original,compressed,thumbnails}
+mkdir -p uploads/videos/{original,compressed}
+mkdir -p uploads/avatars
+mkdir -p uploads/temp
+mkdir -p backups
+mkdir -p logs
+
+# Ejecutar migraciones (si no lo hiciste antes)
+npx prisma migrate dev
+
+# Iniciar en modo desarrollo
 npm run dev
 ```
+
+El backend estará corriendo en `http://localhost:5000`
+
+#### Paso 4: Instalar y ejecutar Frontend (en otra terminal)
+
+```bash
+cd frontend
+
+# Instalar dependencias
+npm install
+
+# Iniciar en modo desarrollo
+npm run dev
+```
+
+El frontend estará corriendo en `http://localhost:5173`
+
+---
+
+### Opción 3: Script de Instalación Automática para macOS
+
+```bash
+# Desde el directorio del proyecto
+cd nuestro-espacio
+
+# Ejecutar script de instalación
+./scripts/install-mac.sh
+```
+
+Este script automatiza todos los pasos anteriores.
+
+---
 
 ## 📁 Estructura del Proyecto
 
@@ -102,7 +240,13 @@ nuestro-espacio/
 │   └── public/
 ├── docker/            # Configuración Docker
 ├── scripts/           # Scripts de mantenimiento
-└── docker-compose.yml
+│   ├── backup.sh      # Script de backup completo
+│   ├── restore.sh     # Script de restauración
+│   └── install-mac.sh # Instalación automática macOS
+├── docker-compose.yml
+├── .env.example       # Variables de entorno de ejemplo
+├── README.md          # Documentación principal
+└── INSTALACION_MACOS.md  # Guía detallada para macOS
 ```
 
 ## 🔧 Scripts Disponibles
