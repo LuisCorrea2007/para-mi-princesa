@@ -1,28 +1,55 @@
-```
-# Compiled and build artifacts
-*.pyc
-__pycache__/
-*.o
-*.obj
-dist/
-build/
-
+```markdown
 # Dependencies
 .venv/
 venv/
 node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
 
-# Logs and temp files
-*.log
-*.tmp
-*.swp
+# Build outputs
+build/
+dist/
+*.egg-info/
+.target/
 
-# Environment
+# Environment specific
 .env
 .env.local
-*.env.*
+.env.*
+!.env.example
 
-# Editors
+# Build outputs
+dist/
+build/
+coverage/
+.nyc_output/
+coverage-final.json
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Temporary files
+*.tmp
+*.temp
+.DS_Store
+Thumbs.db
+
+# IDE specific
 .vscode/
 .idea/
+*.swp
+*.swo
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
 ```
