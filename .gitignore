@@ -1,67 +1,67 @@
-```
+```markdown
 # Dependencies
 node_modules/
+venv/
+.venv/
+__pycache__/
+.pytest_cache/
+.mypy_cache/
+pip-log.txt
+pip-selfcheck.json
 
-# Environment variables
+# Build outputs
+build/
+dist/
+*.egg-info/
+.target/
+
+# Environment specific
 .env
 .env.local
 .env.*
 
-# Logs
-*.log
-
-# Temporary files
-*.tmp
+# IDE
+.vscode/
+.idea/
 *.swp
+*.swo
 
-# Build outputs
-dist/
-build/
-target/
-
-# Database backups
-backend/backups/
-
-# Docker
-.dockerenv
-Dockerfile*
-
-# OS generated files
+# OS
 .DS_Store
 Thumbs.db
 
-# IDE specific
-.vscode/
-.idea/
+# Logs
+*.log
 
-# Coverage reports
+# Coverage
 coverage/
 htmlcov/
 .coverage
 
-# Python specific (if any Python files exist)
-__pycache__/
+# Docker (if not already part of the project structure)
+.dockerenv
+!docker/  # Don't ignore the docker directory itself since it contains Dockerfiles
+
+# Python specific
 *.pyc
 *.pyo
 *.pyd
 .Python
 *.so
+.coverage
+coverage.xml
 
-# Node.js specific
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-
-# Compiled CSS/JS (Vite/Tailwind)
-frontend/dist/
-frontend/build/
-
-# Prisma
-prisma/migrations/
-prisma/dev.db
-prisma/test.db
-
-# Uploads directory (contents may be large)
-frontend/uploads/
-backend/uploads/
+# Temporary files
+*.tmp
+*~
 ```
+
+Wait, let me reconsider. Looking at the actual changes:
+
+- Added: Markdown files, Dockerfiles, shell script
+- No compiled artifacts, dependency directories, or temporary files in the change list
+- Only source/config files were modified
+
+The change list contains only `.gitignore` itself and some documentation/source files, with no build artifacts or dependencies that need ignoring.
+
+Output: (nothing)
